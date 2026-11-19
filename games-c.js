@@ -3,27 +3,44 @@
   'use strict';
   const { rand, pick, shuffle, Snd, FX, S, DATA } = BE;
 
-  /* ============ 10. VEHICLES (15 months+): tap a vehicle and it drives across the screen ============ */
-  const V = (e, vi, en) => ({ e, n: { vi, en } });
-  const FLY = ['✈️', '🚀'];   // these head up and to the right; the rest drive right to left (most emoji face left)
+  /* ============ 10. VEHICLES (15 months+): vehicles drive on their own road, rails, water or sky lane ============ */
+  // k = which lane: road, rail, water (bottom lane) or air (top lane)
+  const V = (e, vi, en, k) => ({ e, n: { vi, en }, k });
   const VPAGES = [
-    { t: 'On the road', bg: 'linear-gradient(#cfe9ff,#e8f7d8)', list: [V('🚗', 'xe hơi', 'car'), V('🚕', 'xe taxi', 'taxi'), V('🚌', 'xe buýt', 'bus'), V('🚓', 'xe cảnh sát', 'police car'), V('🚑', 'xe cứu thương', 'ambulance'), V('🚒', 'xe cứu hỏa', 'fire truck')] },
-    { t: 'Rails, sky and wheels', bg: 'linear-gradient(#d6ecff,#fff3d6)', list: [V('🚂', 'tàu hỏa', 'train'), V('✈️', 'máy bay', 'airplane'), V('🚁', 'trực thăng', 'helicopter'), V('🚀', 'tên lửa', 'rocket'), V('🚲', 'xe đạp', 'bicycle'), V('🛵', 'xe máy', 'scooter')] },
-    { t: 'Work and water', bg: 'linear-gradient(#cdf3ff,#e6f6d8)', list: [V('🚜', 'máy cày', 'tractor'), V('🚛', 'xe tải', 'truck'), V('🚚', 'xe giao hàng', 'delivery truck'), V('🚢', 'con tàu', 'ship'), V('⛵', 'thuyền buồm', 'sailboat'), V('🚤', 'ca nô', 'speedboat')] }
+    { t: 'On the road', bg: 'linear-gradient(#cfe9ff,#e8f7d8)', list: [V('🚗', 'xe hơi', 'car', 'road'), V('🚕', 'xe taxi', 'taxi', 'road'), V('🚌', 'xe buýt', 'bus', 'road'), V('🚓', 'xe cảnh sát', 'police car', 'road'), V('🚑', 'xe cứu thương', 'ambulance', 'road'), V('🚒', 'xe cứu hỏa', 'fire truck', 'road')] },
+    { t: 'Rails, sky and wheels', bg: 'linear-gradient(#d6ecff,#fff3d6)', list: [V('🚂', 'tàu hỏa', 'train', 'rail'), V('✈️', 'máy bay', 'airplane', 'air'), V('🚁', 'trực thăng', 'helicopter', 'air'), V('🚀', 'tên lửa', 'rocket', 'air'), V('🚲', 'xe đạp', 'bicycle', 'road'), V('🛵', 'xe máy', 'scooter', 'road')] },
+    { t: 'Work and water', bg: 'linear-gradient(#cdf3ff,#e6f6d8)', list: [V('🚜', 'máy cày', 'tractor', 'road'), V('🚛', 'xe tải', 'truck', 'road'), V('🚚', 'xe giao hàng', 'delivery truck', 'road'), V('🚢', 'con tàu', 'ship', 'water'), V('⛵', 'thuyền buồm', 'sailboat', 'water'), V('🚤', 'ca nô', 'speedboat', 'water')] }
   ];
+  const TURN = { '✈️': 'rot', '🚀': 'rot', '🚁': 'flip' };   // make flyers point right as they cross the sky lane
   BE.GAMES.push({
     id: 'vehicles', icon: '🚗', color: '#ffd6cc', bg: 'linear-gradient(#cfe9ff,#e8f7d8)', min: 15,
     name: { vi: 'Xe cộ', en: 'Vehicles' },
     start(api) {
       const root = api.root;
-      root.innerHTML = '<div class="an-grid"></div><div class="page-title"></div><button class="round-btn bottom-center" aria-label="Next vehicles">▶&#xFE0E;</button>';
-      const gridEl = root.firstChild, title = root.querySelector('.page-title'), next = root.lastChild;
+      root.innerHTML = '<div class="lane sky"></div><div class="an-grid"></div><div class="lane ground" data-kind="road"></div><div class="page-title"></div>'
+        + '<button class="round-btn clearbtn" aria-label="Next vehicles">▶&#xFE0E;</button>';
+      const sky = root.querySelector('.sky'), gridEl = root.querySelector('.an-grid'), ground = root.querySelector('.ground'),
+        title = root.querySelector('.page-title'), next = root.querySelector('.clearbtn');
       const BG = ['#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#ffc6ff'];
-      let page = 0, nameT = null;
+      const TRANSIT = 3200;          // every vehicle takes the same time to cross, so none can catch up with another
+      let page = 0, nameT = null, R = 60;
+      // one lane = one track: vehicles enter one after another (queue) and never overlap
+      const lanes = { sky: { el: sky, free: 0, clear: 0, kind: 'air', waiting: 0 }, ground: { el: ground, free: 0, clear: 0, kind: 'road', waiting: 0 } };
 
       function layout() {
-        const f = BE.fit(6, innerWidth - 24, innerHeight - 190, 0.1, 240);
+        const W = innerWidth, H = innerHeight;
+        R = Math.round(Math.max(44, Math.min(64, H * 0.075)));
+        const probe = document.createElement('div');            // measure the bottom safe area (iPhone home bar)
+        probe.style.cssText = 'position:fixed;bottom:0;visibility:hidden;padding-bottom:env(safe-area-inset-bottom,0px)';
+        root.appendChild(probe); const sb = parseFloat(getComputedStyle(probe).paddingBottom) || 0; probe.remove();
+        const laneH = Math.round(R * 1.3), top = H < 500 ? 66 : 84, bottomGap = 12 + sb;
+        sky.style.top = top + 'px'; sky.style.height = laneH + 'px';
+        ground.style.height = laneH + 'px'; ground.style.bottom = bottomGap + 'px';
+        const gridTop = top + laneH + 10, gridBottom = H - bottomGap - laneH - 10;
+        gridEl.classList.add('veh'); gridEl.style.top = gridTop + 'px'; gridEl.style.bottom = (H - gridBottom) + 'px'; gridEl.style.padding = '0 10px';
+        const f = BE.fit(6, W - 24, gridBottom - gridTop, 0.1, 240);
         gridEl.style.setProperty('--s', f.s + 'px'); gridEl.style.setProperty('--g', f.gap + 'px');
+        root.style.setProperty('--R', R + 'px');
       }
       function fill() {
         const P = VPAGES[page];
@@ -35,28 +52,41 @@
           t._v = v; gridEl.appendChild(t);
         });
       }
-      function drive(t, v) {
-        const r = t.getBoundingClientRect(), fs = Math.round(r.width * 0.55);
-        const run = document.createElement('div');
-        run.className = 'runner'; run.textContent = v.e; run.style.fontSize = fs + 'px';
-        const cy = r.top + r.height / 2 - fs * 0.55, fly = FLY.includes(v.e);
-        const x0 = fly ? r.left + r.width / 2 - fs / 2 : innerWidth + fs, y0 = cy;
-        const x1 = fly ? innerWidth + fs : -fs * 2, y1 = fly ? cy - innerHeight * 0.4 : cy;
-        run.style.transform = `translate(${x0}px,${y0}px)`;
-        root.appendChild(run);
-        requestAnimationFrame(() => requestAnimationFrame(() => { run.style.transform = `translate(${x1}px,${y1}px)`; }));
-        setTimeout(() => run.remove(), 2800);
+      // Send a vehicle along its lane; it waits its turn if the lane is busy
+      function send(v) {
+        const air = v.k === 'air', lane = air ? lanes.sky : lanes.ground;
+        if (lane.waiting >= 3) return;                              // enough vehicles are already waiting
+        const now = performance.now();
+        let start = Math.max(now, lane.free);
+        if (!air && v.k !== lane.kind) start = Math.max(start, lane.clear);   // wait until the old road/rail/water has cleared
+        const gap = (1.9 * R) / ((innerWidth + 3 * R) / TRANSIT);   // time for the vehicle ahead to move on by about two vehicle lengths
+        lane.free = start + gap; lane.clear = Math.max(lane.clear, start + TRANSIT);
+        lane.waiting++;
+        api.timeout(() => {
+          lane.waiting--;
+          if (!air) { lane.kind = v.k; ground.dataset.kind = v.k; }
+          run(lane.el, v, air);
+          Snd.vehicle(v.e);
+        }, Math.max(0, start - now));
+      }
+      function run(laneEl, v, air) {
+        const W = laneEl.clientWidth, el = document.createElement('div');
+        el.className = 'runner'; el.style.fontSize = R + 'px';
+        el.innerHTML = `<span class="${TURN[v.e] || ''}">${v.e}</span>`;
+        const x0 = air ? -2 * R : W + R, x1 = air ? W + R : -2 * R;
+        el.style.transition = 'none'; el.style.transform = `translateX(${x0}px)`;
+        laneEl.appendChild(el); void el.offsetWidth;
+        el.style.transition = `transform ${TRANSIT}ms linear`; el.style.transform = `translateX(${x1}px)`;
+        setTimeout(() => el.remove(), TRANSIT + 30);
       }
       layout(); fill();
-      api.on(window, 'resize', layout);
+      api.on(window, 'resize', () => { layout(); });
       api.on(gridEl, 'pointerdown', e => {
         const t = e.target.closest && e.target.closest('.an-tile'); if (!t) return;
         const v = t._v;
         t.classList.remove('hit'); void t.offsetWidth; t.classList.add('hit');
-        BE.Voice.stop(); clearTimeout(nameT);
-        api.say(v.n.vi, v.n.en);
-        nameT = api.timeout(() => Snd.vehicle(v.e), 900);
-        drive(t, v);
+        BE.Voice.stop(); api.say(v.n.vi, v.n.en);
+        send(v);
       });
       api.on(next, 'pointerdown', () => { Snd.whoosh(); page = (page + 1) % VPAGES.length; fill(); });
     }

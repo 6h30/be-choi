@@ -216,7 +216,6 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 .sheet a { color: #5b3fb3; word-break: break-word; }
 
 /* ---------- Vehicles, bath time, colour baskets ---------- */
-.runner { position: absolute; left: 0; top: 0; z-index: 25; pointer-events: none; line-height: 1; transition: transform 2.4s cubic-bezier(.4, 0, .6, 1); will-change: transform; }
 .bath { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-top: 56px; }
 .tub { position: relative; border-radius: 50%; background: radial-gradient(circle, #ffffff 0 58%, #d8f1ff 100%); box-shadow: 0 10px 0 rgba(0, 0, 0, .08), inset 0 0 0 8px #bfe6ff; }
 .tub .pet { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; line-height: 1; font-size: calc(var(--D) * .6); }
@@ -236,3 +235,27 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 .bk-item.glide { transition: transform .45s ease-in-out; }
 .bk-item.placed { pointer-events: none; opacity: 0; transition: opacity .2s .35s; z-index: 1; }
 .bk-item.wrong { animation: shake .4s; }
+
+/* Vehicles: a sky lane on top, a road / rail / water lane below, picture tiles in between */
+.lane { position: absolute; left: 0; right: 0; overflow: hidden; pointer-events: none; border-radius: 18px; z-index: 5; }
+.lane.sky { background: linear-gradient(#bfe3ff, #e9f6ff); }
+.lane.sky::before { content: ""; position: absolute; inset: 0; opacity: .95;
+  background: radial-gradient(ellipse 54px 15px at 18% 38%, #fff 96%, transparent), radial-gradient(ellipse 76px 18px at 58% 66%, #fff 96%, transparent), radial-gradient(ellipse 46px 12px at 86% 34%, #fff 96%, transparent); }
+.lane.ground { transition: background-color .3s; }
+.lane.ground[data-kind="road"] { background: #6b7280; }
+.lane.ground[data-kind="road"]::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 2px); height: 4px;
+  background: repeating-linear-gradient(90deg, #fff 0 26px, transparent 26px 52px); }
+.lane.ground[data-kind="rail"] { background: #d6c59c; }
+.lane.ground[data-kind="rail"]::before { content: ""; position: absolute; left: 0; right: 0; top: 12%; bottom: 12%; background: repeating-linear-gradient(90deg, #8a6a43 0 9px, transparent 9px 30px); }
+.lane.ground[data-kind="rail"]::after { content: ""; position: absolute; left: 0; right: 0; top: 30%; bottom: 30%; border-top: 4px solid #6b7280; border-bottom: 4px solid #6b7280; }
+.lane.ground[data-kind="water"] { background: #4dabf7; }
+.lane.ground[data-kind="water"]::after { content: ""; position: absolute; inset: 0; opacity: .8;
+  background: radial-gradient(circle at 50% 120%, transparent 0 9px, rgba(255,255,255,.7) 10px 12px, transparent 13px) 0 0 / 38px 20px repeat; }
+.runner { position: absolute; left: 0; top: 0; height: 100%; display: flex; align-items: center; line-height: 1; will-change: transform; }
+.runner span { display: inline-block; }
+.runner span.rot { transform: rotate(45deg) scale(.82); }
+.runner span.flip { transform: scaleX(-1); }
+
+/* a small pop for vehicle tiles so a tapped tile never grows into the lanes */
+.veh .an-tile.hit { animation: tilepop .4s ease-out; }
+@keyframes tilepop { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
