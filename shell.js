@@ -142,7 +142,11 @@
   function boot() {
     BE.GAMES.sort((a, b) => a.min - b.min);
     renderMenu();
-    if (location.protocol.startsWith('http') && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
+    const native = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+    if (native) {
+      document.documentElement.classList.add('native');
+      try { window.Capacitor.Plugins.StatusBar.hide(); } catch (e) { }
+    } else if (location.protocol.startsWith('http') && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
   }
   boot();
 })();

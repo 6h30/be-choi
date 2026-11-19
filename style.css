@@ -258,3 +258,6 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 /* a small pop for vehicle tiles so a tapped tile never grows into the lanes */
 .veh .an-tile.hit { animation: tilepop .4s ease-out; }
 @keyframes tilepop { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+
+/* inside the native app there is no browser full-screen button */
+.native #fsBtn { display: none; }

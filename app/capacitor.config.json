@@ -1,0 +1,8 @@
+{
+  "appId": "app.littleplay.toddler",
+  "appName": "Little Play",
+  "webDir": "www",
+  "backgroundColor": "#ffe9a8",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false }
+}
