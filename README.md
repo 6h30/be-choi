@@ -27,15 +27,15 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 
 | Game | From (months) | What the child does | Based on |
 |---|---|---|---|
-| 🎈 Bubbles | 12 | Taps bubbles to pop them, taps empty space to blow a new one | Instant cause and effect: touch, then sound and animation. Only a tap is needed. |
-| 🙈 Peekaboo | 12 | Taps a cloth to reveal an animal, which then makes its sound | Around 18 to 24 months children understand that hidden things still exist, so they love hiding and finding. |
-| 🐮 Animal sounds | 12 | Taps an animal to hear its sound, then its name | Children understand more than they can say. Hearing the sound and the name together helps with words. |
-| 🎹 Music | 12 | Taps or slides a finger across 8 coloured bars (Do Re Mi Fa Sol La Ti Do) | Every note is in the major scale, so any touch sounds pleasant. The ▶ button plays "Twinkle, Twinkle, Little Star" as a model for grown-ups. |
-| 🎨 Draw | 15 | Paints rainbow lines or stamps shapes with a finger | Scribbling starts around 15 to 18 months. Big strokes, no "right way" to draw. |
-| 🔔 Buttons | 18 | Switches a light on and off, rings a bell, plays a drum, drives a car, launches a rocket (3, 2, 1), switches day and night | Toddlers love switches and buttons. Each one gives a different result. |
-| 🐻 Feed the bear | 24 | Drags food to the bear's mouth, or taps it and it flies there by itself | Simple dragging, tied to pretend play and caring for others. |
-| 🧩 Shapes | 24 | Drags a shape into the matching hole (circle, square, triangle, star, heart) | Shape sorting starts with the circle; by about 24 months children can match more complex shapes. |
-| 🔍 Find it | 30 | Hears "Where is the apple?" and picks one of three; sometimes finds a colour | Understanding spoken names of things and colours. After two wrong tries the right card glows as a hint. |
+| 🎈 Bubbles | 12 | Taps bubbles to pop them. About half carry a thing inside (fruit, vehicle, toy or animal): popping it shows the thing and says its name, and animals make their sound. Rainbow bubbles pop in a shower of confetti. Tapping empty space blows a new bubble. | Instant cause and effect, plus a name for every surprise. Only a tap is needed. |
+| 🙈 Peekaboo | 12 | Taps six cloths to reveal what is hiding. Each round is a different theme: animals, fruit, vehicles or toys. The name is spoken and the thing makes its sound. | Around 18 to 24 months children understand that hidden things still exist, so they love hiding and finding. |
+| 🐮 Animal sounds | 12 | Taps one of 30 animals, on 5 themed pages (around the house, on the farm, pond and garden, in the jungle, forest, night and sea), to hear its sound and then its name. The first page has the gecko. | Children understand more than they can say. Hearing the sound and the name together helps with words. |
+| 🎹 Music | 12 | Taps or slides a finger across 8 bars. A button switches between 5 instruments: xylophone, piano, bells, drums and an "animal band" where each bar is an animal. The ▶ button plays a tune or rhythm as a model. | Every melodic note is in the major scale, so any touch sounds pleasant. Rhythm and timbre give more to explore. |
+| 🎨 Draw | 15 | Paints rainbow lines, stamps stars and flowers, stamps animals (each one makes its sound), or leaves a sparkle trail. A sponge clears the page. | Scribbling starts around 15 to 18 months. Big strokes, no "right way" to draw. |
+| 🔔 Buttons | 18 | Twelve things to try: light switch, bell, drum, car, rocket (3, 2, 1), day and night, a door that opens on an animal, traffic light, train, alarm clock, a balloon that grows and pops, and a squeaky duck. | Toddlers love switches and buttons. Each one gives a different result. |
+| 🐻 Feed the animals | 24 | Drags food to a hungry friend's mouth, or taps it and it flies there by itself. Six friends (bear, bunny, kitty, puppy, panda, monkey) take turns, each with a favourite food. 16 foods. | Simple dragging, tied to pretend play and caring for others. |
+| 🧩 Shapes | 24 | Drags each shape into the matching hole. Ten shapes (circle, square, triangle, star, heart, diamond, oval, hexagon, rectangle, plus). Every few rounds there are four holes instead of three. | Shape sorting starts with the circle; by about 24 months children can match more complex shapes. |
+| 🔍 Find it | 30 | Four kinds of question in turn: find a thing ("Where is the apple?"), find a colour, find the animal that makes the sound you hear, and find the group with the right number (one, two or three). After two wrong tries the right card glows as a hint. | Understanding spoken names of things and colours, and early counting. |
 
 ## Design rules drawn from the research
 
@@ -62,7 +62,7 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 ## Current limits
 
 - **Not yet tried on real devices.** The site was tested in desktop Chrome with touch emulation at three sizes (phone upright, phone sideways, iPad): tapping, dragging and opening the parent area all work with no errors. Sound levels were measured, but the sounds and the voice have not been heard by ear in testing.
-- **Animal sounds are synthesized.** Each one is built in the browser from a few oscillators and filters, so they sound cartoon-like rather than like real recordings. They work offline and need no files. Real recordings could replace them later.
+- **Animal sounds are synthesized.** All 30 are built in the browser from a few oscillators and filters, so they sound cartoon-like rather than like real recordings. They work offline and need no files. Real recordings could replace them later.
 - **The voice depends on the device.** The site uses the built-in text-to-speech voice of the iPhone, iPad or Android phone. If no English voice is installed, spoken words may be skipped (the parent area explains how to install one). Sound and pictures still work.
 - **iPhone/iPad:** the ringer switch must be on to hear sound.
 - **Emoji** look a little different on iOS, Android and Windows.
@@ -70,8 +70,8 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 ## Files
 
 - `index.html`, `style.css`: the interface
-- `core.js`: settings, sound (including the animal sounds), voice, effects, drag helper
-- `games-a.js`: bubbles, peekaboo, animal sounds, music (and the data for animals, food, objects and colours)
+- `core.js`: settings, sound (30 animal sounds, vehicles, drums, instruments), voice, effects, drag helper
+- `games-a.js`: bubbles, peekaboo, animal sounds, music (and the data for animals, food, vehicles, toys, objects, colours and counting)
 - `games-b.js`: draw, buttons, feed the bear, shapes, find it
 - `shell.js`: menu, parent area, timer
 - `sw.js`, `manifest.webmanifest`, `icon*`: offline use and installing as an app
