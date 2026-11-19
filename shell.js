@@ -94,10 +94,10 @@
       const key = seg.dataset.key;
       seg.querySelectorAll('button').forEach(b => b.classList.toggle('on', String(S[key]) === b.dataset.v));
     });
-    const vi = Voice.has('vi');
-    $('#voiceInfo').textContent = !Voice.supported ? 'Trình duyệt này không hỗ trợ đọc giọng nói. Trò chơi vẫn có âm thanh và hình ảnh.'
-      : vi ? 'Máy đã có giọng đọc tiếng Việt.'
-        : 'Máy chưa có giọng tiếng Việt, nên lời đọc có thể bị bỏ qua hoặc đọc bằng giọng khác. Trên iPhone/iPad: Cài đặt → Trợ năng → Nội dung được đọc → Giọng nói → Tiếng Việt. Trên Android: Cài đặt → Ngôn ngữ → Chuyển văn bản thành giọng nói.';
+    const en = Voice.has('en');
+    $('#voiceInfo').textContent = !Voice.supported ? 'This browser can\'t read text aloud. The games still have sound and animation.'
+      : en ? 'An English voice is available on this device.'
+        : 'No English voice was found on this device, so spoken words may be skipped. On iPhone/iPad: Settings → Accessibility → Spoken Content → Voices → English. On Android: Settings → Language → Text-to-speech output.';
   }
   function openPanel() { syncPanel(); panel.classList.remove('hidden'); }
   $('#panelClose').addEventListener('click', () => { panel.classList.add('hidden'); renderMenu(); });
@@ -109,7 +109,7 @@
     S[key] = v === 'true' ? true : v === 'false' ? false : (isNaN(+v) ? v : +v);
     BE.save(); syncPanel();
   }));
-  $('#testVoice').addEventListener('click', () => { Snd.unlock(); Voice.say(S.lang === 'vi' ? 'Xin chào bé! Mình cùng chơi nhé!' : 'Hello! Let us play together!'); });
+  $('#testVoice').addEventListener('click', () => { Snd.unlock(); Voice.say('Hello! Let us play together!'); });
   $('#fsBtn').addEventListener('click', () => {
     const d = document.documentElement;
     try { if (document.fullscreenElement) document.exitFullscreen(); else (d.requestFullscreen || d.webkitRequestFullscreen || function () { }).call(d); } catch (e) { }
@@ -126,7 +126,7 @@
     exitGame(false);
     bye.classList.remove('hidden');
     Snd.lullaby();
-    setTimeout(() => Voice.say(S.lang === 'vi' ? 'Hết giờ chơi rồi. Hẹn gặp lại bé nhé!' : 'All done playing. See you soon!'), 400);
+    setTimeout(() => Voice.say('All done playing. See you next time!'), 400);
   }
   document.addEventListener('visibilitychange', () => { if (document.hidden) Voice.stop(); });
 

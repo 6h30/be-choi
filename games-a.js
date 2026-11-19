@@ -156,7 +156,7 @@
     name: { vi: 'Con vật kêu', en: 'Animal sounds' },
     start(api) {
       const root = api.root;
-      root.innerHTML = '<div class="an-grid"></div><button class="round-btn bottom-center" aria-label="Đổi con vật">🔄</button>';
+      root.innerHTML = '<div class="an-grid"></div><button class="round-btn bottom-center" aria-label="New animals">🔄</button>';
       const gridEl = root.firstChild, next = root.lastChild;
       const BG = ['#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff', '#ffadad'];
       let set = [];
@@ -200,13 +200,13 @@
     name: { vi: 'Đàn', en: 'Music' },
     start(api) {
       const root = api.root;
-      // 8 nốt: Đô Rê Mi Pha Son La Si Đô
+      // 8 notes: Do Re Mi Fa Sol La Ti Do
       const N = [
-        { f: 261.63, c: '#ff6b6b', n: 'Đô' }, { f: 293.66, c: '#ffa94d', n: 'Rê' }, { f: 329.63, c: '#ffd43b', n: 'Mi' },
-        { f: 349.23, c: '#a9e34b', n: 'Pha' }, { f: 392.00, c: '#38d9a9', n: 'Son' }, { f: 440.00, c: '#4dabf7', n: 'La' },
-        { f: 493.88, c: '#9775fa', n: 'Si' }, { f: 523.25, c: '#f783ac', n: 'Đô' }
+        { f: 261.63, c: '#ff6b6b', n: 'Do' }, { f: 293.66, c: '#ffa94d', n: 'Re' }, { f: 329.63, c: '#ffd43b', n: 'Mi' },
+        { f: 349.23, c: '#a9e34b', n: 'Fa' }, { f: 392.00, c: '#38d9a9', n: 'Sol' }, { f: 440.00, c: '#4dabf7', n: 'La' },
+        { f: 493.88, c: '#9775fa', n: 'Ti' }, { f: 523.25, c: '#f783ac', n: 'Do' }
       ];
-      root.innerHTML = '<div class="xy"></div><button class="round-btn xybtn" aria-label="Nghe thử">▶&#xFE0E;</button>';
+      root.innerHTML = '<div class="xy"></div><button class="round-btn xybtn" aria-label="Play a song">▶&#xFE0E;</button>';
       const xy = root.firstChild, btn = root.lastChild;
       const bars = N.map((n, i) => {
         const b = document.createElement('div');
@@ -238,7 +238,7 @@
       let playing = false;
       api.on(btn, 'pointerdown', () => {
         if (playing) return; playing = true;
-        // Đô Đô Son Son La La Son | Pha Pha Mi Mi Rê Rê Đô
+        // Twinkle, Twinkle, Little Star: Do Do Sol Sol La La Sol | Fa Fa Mi Mi Re Re Do
         const mel = [0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0];
         mel.forEach((n, k) => api.timeout(() => hit(n), k * 520));
         api.timeout(() => { playing = false; }, mel.length * 520);

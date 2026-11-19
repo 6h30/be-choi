@@ -11,9 +11,9 @@
       const root = api.root;
       root.innerHTML = `<div class="paint"><canvas></canvas></div>
         <div class="tools">
-          <button class="round-btn on" data-m="line" aria-label="Vẽ cầu vồng">🌈</button>
-          <button class="round-btn" data-m="stamp" aria-label="Đóng dấu">⭐</button>
-          <button class="round-btn" data-m="clear" aria-label="Xóa">🧽</button>
+          <button class="round-btn on" data-m="line" aria-label="Rainbow brush">🌈</button>
+          <button class="round-btn" data-m="stamp" aria-label="Stamps">⭐</button>
+          <button class="round-btn" data-m="clear" aria-label="Clear">🧽</button>
         </div>`;
       const cv = root.querySelector('canvas'), ctx = cv.getContext('2d');
       let W = 0, H = 0, dpr = 1, mode = 'line', hue = 0;
@@ -278,7 +278,7 @@
     name: { vi: 'Tìm đồ', en: 'Find it' },
     start(api) {
       const root = api.root;
-      root.innerHTML = `<div class="fn"><div class="fn-top"><button class="round-btn" aria-label="Nghe lại">🔊</button><div class="fn-q"></div></div><div class="fn-opts"></div></div>`;
+      root.innerHTML = `<div class="fn"><div class="fn-top"><button class="round-btn" aria-label="Hear it again">🔊</button><div class="fn-q"></div></div><div class="fn-opts"></div></div>`;
       const q = root.querySelector('.fn-q'), opts = root.querySelector('.fn-opts'), again = root.querySelector('.round-btn');
       let target = null, mode = 'item', n = 0, wrongs = 0, lock = false, lastKey = '';
 

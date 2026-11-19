@@ -13,6 +13,7 @@
   const DEF = { volume: 0.8, voice: true, lang: 'vi', timer: 10, age: 3 };
   const S = BE.S = Object.assign({}, DEF);
   try { Object.assign(S, JSON.parse(localStorage.getItem('bechoi-v1') || '{}')); } catch (e) { }
+  S.lang = 'en'; // the whole site is in English (older saved settings may say 'vi')
   BE.save = () => { try { localStorage.setItem('bechoi-v1', JSON.stringify(S)); } catch (e) { } };
 
   /* ---------- Âm thanh: tự tổng hợp bằng WebAudio, không cần tệp ---------- */

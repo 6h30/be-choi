@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Bé chơi nào</title>
-<meta name="description" content="Trò chơi chạm và vui cho bé 1–3 tuổi, chạy ngay trên điện thoại hoặc iPad.">
+<title>Little Play</title>
+<meta name="description" content="Tap-and-play games for toddlers aged 1 to 3. Runs right in the browser on phones and tablets.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Bé chơi nào">
+<meta name="apple-mobile-web-app-title" content="Little Play">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#ffe9a8">
 <link rel="manifest" href="manifest.webmanifest">
@@ -18,65 +18,62 @@
 <body>
 <div id="app">
 
-  <!-- Màn hình chọn trò -->
+  <!-- Game menu -->
   <section id="menu" class="screen">
-    <div class="menu-title">Cùng chơi nào!</div>
+    <div class="menu-title">Let's play!</div>
     <div id="gridwrap"><div id="grid"></div></div>
-    <button id="gear" class="gate" aria-label="Dành cho phụ huynh (giữ 2 giây)">⚙️<i class="fill"></i></button>
+    <button id="gear" class="gate" aria-label="For parents (hold for 2 seconds)">⚙️<i class="fill"></i></button>
   </section>
 
-  <!-- Màn hình chơi -->
+  <!-- Game screen -->
   <section id="stage" class="screen hidden">
     <div id="game"></div>
-    <button id="home" aria-label="Về nhà">🏠</button>
+    <button id="home" aria-label="Home">🏠</button>
   </section>
 
-  <!-- Hết giờ chơi -->
+  <!-- Play time is over -->
   <div id="bye" class="hidden">
     <div class="moon">🌙</div>
-    <div class="bye-text">Hết giờ chơi rồi!<br>Hẹn gặp lại bé nhé.</div>
-    <button id="byeResume" class="gate small">Phụ huynh: chơi tiếp (giữ 2 giây)<i class="fill"></i></button>
+    <div class="bye-text">All done playing!<br>See you next time.</div>
+    <button id="byeResume" class="gate small">Parents: keep playing (hold for 2 seconds)<i class="fill"></i></button>
   </div>
 
-  <!-- Khu dành cho phụ huynh -->
+  <!-- Parent area -->
   <div id="panel" class="hidden">
     <div class="sheet">
-      <header><h2>Dành cho phụ huynh</h2><button id="panelClose" aria-label="Đóng">✕</button></header>
+      <header><h2>For parents</h2><button id="panelClose" aria-label="Close">✕</button></header>
 
-      <div class="row"><span>Âm lượng</span><input id="vol" type="range" min="0" max="100"></div>
+      <div class="row"><span>Volume</span><input id="vol" type="range" min="0" max="100"></div>
 
-      <div class="row"><span>Giọng nói</span>
-        <div class="seg" data-key="voice"><button data-v="true">Bật</button><button data-v="false">Tắt</button></div></div>
+      <div class="row"><span>Voice</span>
+        <div class="seg" data-key="voice"><button data-v="true">On</button><button data-v="false">Off</button></div></div>
 
-      <div class="row"><span>Ngôn ngữ</span>
-        <div class="seg" data-key="lang"><button data-v="vi">Tiếng Việt</button><button data-v="en">English</button></div></div>
+      <div class="row"><span>Child's age</span>
+        <div class="seg" data-key="age"><button data-v="1">1 year</button><button data-v="2">2 years</button><button data-v="3">3 years</button></div></div>
 
-      <div class="row"><span>Tuổi của bé</span>
-        <div class="seg" data-key="age"><button data-v="1">1 tuổi</button><button data-v="2">2 tuổi</button><button data-v="3">3 tuổi</button></div></div>
-
-      <div class="row"><span>Hẹn giờ chơi</span>
-        <div class="seg" data-key="timer"><button data-v="0">Tắt</button><button data-v="5">5 phút</button><button data-v="10">10 phút</button><button data-v="15">15 phút</button></div></div>
+      <div class="row"><span>Play timer</span>
+        <div class="seg" data-key="timer"><button data-v="0">Off</button><button data-v="5">5 min</button><button data-v="10">10 min</button><button data-v="15">15 min</button></div></div>
 
       <div class="row">
-        <button id="testVoice" class="btn">🔊 Thử giọng nói</button>
-        <button id="fsBtn" class="btn">⛶ Toàn màn hình</button>
-        <button id="resetTimer" class="btn">⏱ Đặt lại giờ chơi</button>
+        <button id="testVoice" class="btn">🔊 Test voice</button>
+        <button id="fsBtn" class="btn">⛶ Full screen</button>
+        <button id="resetTimer" class="btn">⏱ Reset play time</button>
       </div>
       <p id="voiceInfo" class="note"></p>
 
       <details open>
-        <summary>Vì sao trang được thiết kế như vậy?</summary>
+        <summary>Why is it designed this way?</summary>
         <ul class="why">
-          <li><b>Nút to, chạm là được.</b> Bé 2–3 tuổi làm tốt thao tác chạm và kéo, nhưng khó với chụm ngón, xoay, nhấn giữ. Mọi nút đều to hơn 2 cm (mức khuyến nghị cho trẻ nhỏ) và không có thao tác nào phức tạp hơn "chạm" hoặc "kéo".</li>
-          <li><b>Chạm là có phản hồi ngay.</b> Bé 1 tuổi đang học nhân quả: chạm thì có tiếng, có hình. Mọi lần chạm đều cho âm thanh và hiệu ứng, không có chỗ nào "chết".</li>
-          <li><b>Không thua, không điểm, không đồng hồ.</b> Bé chọn sai thì vật lắc nhẹ rồi thử lại, không có tiếng báo lỗi. Không quảng cáo, không đường dẫn ra ngoài.</li>
-          <li><b>Có thể kéo hoặc chạm hai lần.</b> Với trò kéo thả, bé chưa kéo được thì chạm vào vật, vật sẽ tự bay tới chỗ đúng.</li>
-          <li><b>Ú òa và giấu đồ.</b> Khoảng 18–24 tháng bé hiểu vật vẫn còn khi bị che, nên rất thích trò giấu và tìm.</li>
-          <li><b>Vẽ nguệch ngoạc.</b> Bé bắt đầu cầm bút nguệch ngoạc từ 15–18 tháng. Vẽ bằng ngón tay cho nét lớn, nhiều màu, không cần "vẽ đúng".</li>
-          <li><b>Chơi ngắn, chơi cùng bé.</b> Tổ chức WHO khuyên dưới 1 tuổi không dùng màn hình, từ 2–4 tuổi không quá 1 giờ mỗi ngày. Hội Nhi khoa Hoa Kỳ khuyên cha mẹ chơi cùng bé và chọn ứng dụng chậm, mở. Vì vậy có hẹn giờ và màn hình "hẹn gặp lại".</li>
-          <li><b>Lời khuyên:</b> ngồi cạnh bé, gọi tên con vật, màu sắc cùng bé. Bé học tiếng nói nhanh hơn khi có người lớn trò chuyện cùng.</li>
+          <li><b>Big targets, simple touches.</b> Two- and three-year-olds handle tapping and dragging well, but pinching, rotating and press-and-hold are hard. Every button is bigger than 2 cm (the usual guideline for young children) and nothing needs more than a tap or a drag.</li>
+          <li><b>Instant feedback.</b> One-year-olds are learning cause and effect: touch something and it makes a sound and moves. Every touch answers with sound and animation, so nothing feels dead.</li>
+          <li><b>No losing, no score, no clock.</b> A wrong choice just wiggles and the child tries again, with no error buzzer. No ads and no links out.</li>
+          <li><b>Drag, or just tap.</b> In the drag games, if a child can't drag yet, tapping the piece sends it to the right spot by itself.</li>
+          <li><b>Peekaboo and hiding.</b> Around 18 to 24 months children understand that things still exist when hidden, which is why hide-and-find games are so popular.</li>
+          <li><b>Scribbling.</b> Children start to scribble at about 15 to 18 months. Finger painting gives big, colourful strokes with no "right way" to draw.</li>
+          <li><b>Short sessions, play together.</b> The WHO advises no screen time under age 1 and no more than 1 hour a day for ages 2 to 4. The American Academy of Pediatrics suggests slow, open-ended apps and playing along with your child. That is why there is a timer and a "see you next time" screen.</li>
+          <li><b>Tip:</b> sit next to your child and name the animals and colours together. Children pick up words faster when a grown-up talks with them.</li>
         </ul>
-        <p class="note">Mẹo iPhone/iPad: bật chuông (công tắc bên hông) để nghe âm thanh. Bấm nút Chia sẻ → "Thêm vào Màn hình chính" để mở như một ứng dụng, chạy cả khi không có mạng.</p>
+        <p class="note">iPhone/iPad tip: turn the ringer on (the side switch) to hear sound. Tap Share, then "Add to Home Screen", to open it like an app. It works without internet after the first visit.</p>
       </details>
     </div>
   </div>
