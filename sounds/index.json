@@ -1,0 +1,74 @@
+[
+ {
+  "key": "cat",
+  "file": "cat.mp3",
+  "dur": 1.5,
+  "title": "Meow of a Siamese cat - freemaster2.wav",
+  "author": "freemaster2",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Meow_of_a_Siamese_cat_-_freemaster2.wav"
+ },
+ {
+  "key": "dog",
+  "file": "dog.mp3",
+  "dur": 2.0,
+  "title": "Barking of a dog.ogg",
+  "author": "Amada44",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Barking_of_a_dog.ogg"
+ },
+ {
+  "key": "bird",
+  "file": "bird.mp3",
+  "dur": 1.07,
+  "title": "Bird chirp 2 (Gravity Sound).mp3",
+  "author": "Gravity Sound",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bird_chirp_2_(Gravity_Sound).mp3"
+ },
+ {
+  "key": "cow",
+  "file": "cow.mp3",
+  "dur": 2.19,
+  "title": "Mudchute cow 1.ogg",
+  "author": "Secretlondon",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mudchute_cow_1.ogg"
+ },
+ {
+  "key": "pig",
+  "file": "pig.mp3",
+  "dur": 0.66,
+  "title": "Pig grunt - Erdie.ogg",
+  "author": "erdie",
+  "license": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pig_grunt_-_Erdie.ogg"
+ },
+ {
+  "key": "sheep",
+  "file": "sheep.mp3",
+  "dur": 2.0,
+  "title": "Sheep bleating.ogg",
+  "author": "earthcalling",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Sheep_bleating.ogg"
+ },
+ {
+  "key": "horse",
+  "file": "horse.mp3",
+  "dur": 2.27,
+  "title": "Wiehern.ogg",
+  "author": "Hü.",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Wiehern.ogg"
+ },
+ {
+  "key": "chicken",
+  "file": "chicken.mp3",
+  "dur": 2.5,
+  "title": "Chickens demanding food.ogg",
+  "author": "alys",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Chickens_demanding_food.ogg"
+ }
+]

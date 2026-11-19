@@ -1,7 +1,19 @@
-// Lưu sẵn mọi tệp để trang chạy được cả khi không có mạng
-const CACHE = 'be-choi-v1';
+// Cache everything up front so the site also works without internet
+const CACHE = 'be-choi-v2';
 const FILES = ['./', 'index.html', 'style.css', 'core.js', 'games-a.js', 'games-b.js', 'shell.js', 'manifest.webmanifest', 'icon.svg', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
-self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
+self.addEventListener('install', e => {
+  e.waitUntil((async () => {
+    const c = await caches.open(CACHE);
+    await c.addAll(FILES);
+    try { // the animal recordings listed in sounds/index.json (skipped quietly if absent)
+      const r = await fetch('sounds/index.json');
+      const list = await r.clone().json();
+      await c.put('sounds/index.json', r);
+      await Promise.all(list.map(m => c.add('sounds/' + m.file).catch(() => { })));
+    } catch (_) { }
+    await self.skipWaiting();
+  })());
+});
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;

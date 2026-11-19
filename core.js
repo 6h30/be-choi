@@ -35,6 +35,7 @@
     function unlock() {
       if (!init()) return;
       if (ctx.state !== 'running') ctx.resume();
+      decodeAll();
     }
     function vol(v) { if (master) master.gain.value = v; }
     function tone(f, o = {}) {
@@ -150,11 +151,49 @@
       () => { tone(540, { dur: .25, type: 'square', vol: .12 }); tone(800, { dur: .25, type: 'square', vol: .12 }); },
       () => { tone(330, { dur: .2, to: 250, vol: .5 }); hiss({ f: 900, dur: .04, vol: .2, q: 2 }); }
     ];
+    // ---- Real animal recordings (sounds/*.mp3). The synthesized sounds above are the fallback. ----
+    const REAL = {};   // key -> { dur, raw, buf }
+    let CREDITS = [];
+    const KEY = { '🐱': 'cat', '🐶': 'dog', '🦎': 'gecko', '🐦': 'bird', '🦗': 'cricket', '🐰': 'bunny', '🐮': 'cow', '🐷': 'pig', '🐑': 'sheep', '🐐': 'goat',
+      '🐴': 'horse', '🐔': 'chicken', '🦆': 'duck', '🐸': 'frog', '🐝': 'bee', '🐍': 'snake', '🦃': 'turkey', '🐓': 'rooster', '🦁': 'lion', '🐯': 'tiger',
+      '🐘': 'elephant', '🐒': 'monkey', '🦜': 'parrot', '🐻': 'bear', '🐺': 'wolf', '🦉': 'owl', '🦊': 'fox', '🐧': 'penguin', '🐬': 'dolphin', '🐋': 'whale' };
+    function decodeOne(k) {
+      const s = REAL[k];
+      if (!s || !s.raw || !ctx || s.buf || s.dec) return;
+      s.dec = true;
+      try { ctx.decodeAudioData(s.raw.slice(0), b => { s.buf = b; }, () => { s.bad = true; }); } catch (e) { s.bad = true; }
+    }
+    function decodeAll() { Object.keys(REAL).forEach(decodeOne); }
+    function loadReal() {
+      if (!window.fetch) return;
+      fetch('sounds/index.json').then(r => r.json()).then(list => {
+        CREDITS = list;
+        list.forEach(m => {
+          REAL[m.key] = { dur: m.dur };
+          fetch('sounds/' + m.file).then(r => r.arrayBuffer()).then(ab => { REAL[m.key].raw = ab; decodeOne(m.key); }).catch(() => { delete REAL[m.key]; });
+        });
+      }).catch(() => { });
+    }
+    function playReal(k) {
+      const s = REAL[k];
+      if (!s || !s.buf || !ctx || ctx.state !== 'running') return false;
+      const src = ctx.createBufferSource(), g = ctx.createGain();
+      src.buffer = s.buf; g.gain.value = 1.4; src.connect(g); g.connect(master); src.start();
+      return true;
+    }
+    loadReal();
     // Thang âm ngũ cung: chạm bừa vẫn nghe hài hòa
     const PENTA = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5];
     const api = {
       unlock, vol, tone, hiss, voc, PENTA,
-      animal(emoji) { const f = ANIMAL[emoji]; return f ? f() : 0; },
+      animal(emoji) {
+        const k = KEY[emoji], r = k && REAL[k];
+        if (r && !r.bad && r.buf && playReal(k)) return r.dur;
+        if (r && r.raw) decodeOne(k);      // not decoded yet: use the synthesized sound this one time
+        const f = ANIMAL[emoji]; return f ? f() : 0;
+      },
+      credits() { return CREDITS; },
+      hasReal(emoji) { const k = KEY[emoji], r = k && REAL[k]; return !!(r && r.buf); },
       marimba(f) { tone(f, { dur: 0.9, vol: 0.35, att: 0.004 }); tone(f * 4, { dur: 0.25, vol: 0.1, att: 0.002 }); tone(f * 2, { dur: 0.5, vol: 0.08 }); },
       pop(i) { const f = PENTA[(i == null ? Math.floor(Math.random() * PENTA.length) : i) % PENTA.length]; tone(f, { dur: 0.2, vol: 0.3, to: f * 1.5 }); hiss({ f: 2600, to: 800, dur: 0.1, vol: 0.22, q: 0.8 }); },
       ding(f) { f = f || 880; tone(f, { dur: 0.7, vol: 0.3 }); tone(f * 2.01, { dur: 0.3, vol: 0.1 }); },

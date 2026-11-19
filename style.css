@@ -211,3 +211,5 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 .row-s { flex-wrap: wrap; }
 .opt .cnt-row { line-height: 1; white-space: nowrap; }
 .pk { padding-top: 70px; }
+
+.sheet a { color: #5b3fb3; word-break: break-word; }

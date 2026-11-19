@@ -62,7 +62,7 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 ## Current limits
 
 - **Not yet tried on real devices.** The site was tested in desktop Chrome with touch emulation at three sizes (phone upright, phone sideways, iPad): tapping, dragging and opening the parent area all work with no errors. Sound levels were measured, but the sounds and the voice have not been heard by ear in testing.
-- **Animal sounds are synthesized.** All 30 are built in the browser from a few oscillators and filters, so they sound cartoon-like rather than like real recordings. They work offline and need no files. Real recordings could replace them later.
+- **Animal sounds: 8 real recordings, the rest synthesized.** Cat, dog, bird, cow, pig, sheep, horse and chicken use short real recordings (from Wikimedia Commons, CC0, public domain, CC BY and CC BY-SA; see the "Sound credits" list in the parent area). The other 22 animals are still built in the browser from a few oscillators and filters, so they sound cartoon-like. More recordings can be added by listing them in `sounds/index.json`. If a recording is missing or fails to load, the synthesized sound plays instead.
 - **The voice depends on the device.** The site uses the built-in text-to-speech voice of the iPhone, iPad or Android phone. If no English voice is installed, spoken words may be skipped (the parent area explains how to install one). Sound and pictures still work.
 - **iPhone/iPad:** the ringer switch must be on to hear sound.
 - **Emoji** look a little different on iOS, Android and Windows.
@@ -74,6 +74,7 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 - `games-a.js`: bubbles, peekaboo, animal sounds, music (and the data for animals, food, vehicles, toys, objects, colours and counting)
 - `games-b.js`: draw, buttons, feed the bear, shapes, find it
 - `shell.js`: menu, parent area, timer
+- `sounds/`: the animal recordings (trimmed, level-matched MP3s) and `index.json` with their credits
 - `sw.js`, `manifest.webmanifest`, `icon*`: offline use and installing as an app
 
 **To add a game:** add a block `BE.GAMES.push({ id, icon, color, bg, min, name, start(api) { ... } })` to `games-a.js` or `games-b.js`. The `api` object provides `say`, `on`, `timeout` and `loop`, all of which clean up when the child leaves the game.

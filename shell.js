@@ -99,7 +99,15 @@
       : en ? 'An English voice is available on this device.'
         : 'No English voice was found on this device, so spoken words may be skipped. On iPhone/iPad: Settings → Accessibility → Spoken Content → Voices → English. On Android: Settings → Language → Text-to-speech output.';
   }
-  function openPanel() { syncPanel(); panel.classList.remove('hidden'); }
+  const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function fillCredits() {
+    const list = Snd.credits().slice().sort((a, b) => a.key.localeCompare(b.key));
+    $('#creditList').innerHTML = list.length
+      ? '<ul class="why">' + list.map(m => `<li><b>${esc(m.key.charAt(0).toUpperCase() + m.key.slice(1))}</b>: <a href="${esc(m.source)}" target="_blank" rel="noopener">${esc(m.title)}</a> by ${esc(m.author)}, ${esc(m.license)}</li>`).join('') + '</ul>'
+        + '<p class="note">Animal recordings come from Wikimedia Commons. They were trimmed, volume-levelled and compressed for this site, and keep their original licenses (CC0 and public domain need no credit; CC BY and CC BY-SA are credited above). Tiger and dolphin use computer-made sounds, as do the vehicle and instrument sounds.</p>'
+      : 'Animal sounds on this device are computer-made.';
+  }
+  function openPanel() { syncPanel(); fillCredits(); panel.classList.remove('hidden'); }
   $('#panelClose').addEventListener('click', () => { panel.classList.add('hidden'); renderMenu(); });
   $('#vol').addEventListener('input', e => { S.volume = e.target.value / 100; Snd.vol(S.volume); BE.save(); });
   $('#vol').addEventListener('change', () => { Snd.unlock(); Snd.ding(784); });
