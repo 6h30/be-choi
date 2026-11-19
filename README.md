@@ -1,77 +1,79 @@
-# Bé chơi nào — trang trò chơi chạm cho bé 1–3 tuổi
+# Little Play: tap-and-play games for toddlers aged 1 to 3
 
-Chạy trên trình duyệt điện thoại và iPad, không cần cài ứng dụng, không quảng cáo, không thu thập dữ liệu. Âm thanh tự tạo bằng WebAudio, hình dùng emoji và SVG nên không có tệp ảnh hay tiếng nào cần tải.
+Runs in the browser on phones and tablets. No app to install, no ads, no data collection. Sounds are generated in the browser with the Web Audio API, and pictures are emoji and SVG, so there are no image or audio files to download. The whole site is in English.
 
-## Cách chạy
+**Live site:** https://6h30.github.io/be-choi/
 
-**Thử nhanh trên máy tính:** mở `index.html` bằng Chrome. (Giọng nói và chế độ ngoại tuyến cần địa chỉ `http`, nên nên dùng cách dưới.)
+## How to run
 
-**Mở trên điện thoại/iPad cùng mạng Wi-Fi:**
+**Quick try on a computer:** open `index.html` in Chrome. (Spoken words and offline mode need an `http` address, so the options below work better.)
+
+**On a phone or tablet on the same Wi-Fi:**
 
 ```bash
-cd E:\Claude\be-choi
+cd be-choi
 python -m http.server 8080
 ```
 
-Rồi mở `http://<địa chỉ IP máy tính>:8080` trên điện thoại.
+Then open `http://<your computer's IP address>:8080` on the phone.
 
-**Đưa lên mạng để mở ở đâu cũng được:** kéo thả cả thư mục này vào Netlify Drop, hoặc đẩy lên GitHub Pages / Cloudflare Pages. Đều miễn phí, trang là web tĩnh.
+**Put it online:** the repo is set up for GitHub Pages (branch `main`, root folder). Netlify Drop and Cloudflare Pages also work, since the site is static.
 
-**Cài như ứng dụng:** iPhone/iPad bấm Chia sẻ → "Thêm vào Màn hình chính". Android bấm menu → "Cài đặt ứng dụng". Sau lần mở đầu có mạng, trang chạy được cả khi không có mạng.
+**Install like an app:** on iPhone/iPad tap Share, then "Add to Home Screen". On Android open the menu and choose "Install app". After the first visit with internet, the site also works offline.
 
-**Khu phụ huynh:** giữ nút ⚙️ ở góc phải màn hình chính 2 giây. Ở đó chỉnh âm lượng, bật/tắt giọng, tiếng Việt/English, tuổi của bé (lọc trò phù hợp), hẹn giờ chơi.
+**Parent area:** hold the ⚙️ button in the top-right corner of the menu for 2 seconds. There you can change the volume, turn the voice on or off, filter games by the child's age, and set the play timer.
 
-## Chín trò chơi và lý do chọn
+## The nine games and why they were chosen
 
-| Trò | Từ tháng | Bé làm gì | Dựa trên |
+| Game | From (months) | What the child does | Based on |
 |---|---|---|---|
-| 🎈 Bong bóng | 12 | Chạm cho bóng nổ, chạm chỗ trống để thổi bóng mới | Nhân quả tức thì: chạm → có tiếng, có hình. Chỉ cần thao tác chạm. |
-| 🙈 Ú òa | 12 | Chạm tấm vải để mở ra con vật | Vật vẫn còn khi bị che (khoảng 18–24 tháng hiểu rõ) nên bé rất thích giấu và tìm. |
-| 🐮 Con vật kêu | 12 | Chạm con vật nghe tên và tiếng kêu | Bé hiểu nhiều hơn nói. Lặp lại tên + tiếng kêu giúp học từ. |
-| 🎹 Đàn | 12 | Chạm hoặc lướt trên các thanh màu | Thang âm ngũ cung, chạm bừa vẫn nghe hài hòa. Nút ▶ cho người lớn làm mẫu. |
-| 🎨 Vẽ | 15 | Vẽ cầu vồng hoặc đóng dấu bằng ngón tay | Nguệch ngoạc xuất hiện khoảng 15–18 tháng. Nét lớn, không cần vẽ "đúng". |
-| 🔔 Nút bấm | 18 | Bật đèn, rung chuông, gõ trống, xe chạy, tên lửa đếm 3-2-1, ngày/đêm | Bé mê công tắc, nút bấm. Mỗi nút một kết quả khác nhau. |
-| 🐻 Cho gấu ăn | 24 | Kéo đồ ăn vào miệng gấu, hoặc chạm để đồ ăn tự bay tới | Kéo thả đơn giản, gắn với giả vờ và chăm sóc. |
-| 🧩 Xếp hình | 24 | Kéo hình vào đúng ô (tròn, vuông, tam giác, sao, tim) | Xếp hình khối bắt đầu từ ô tròn, đến 24 tháng phân biệt được hình phức tạp hơn. |
-| 🔍 Tìm đồ | 30 | Nghe "Đâu là quả táo?" rồi chọn 1 trong 3; thỉnh thoảng tìm màu | Hiểu lời nói về tên vật và màu. Sai hai lần thì ô đúng nhấp nháy gợi ý. |
+| 🎈 Bubbles | 12 | Taps bubbles to pop them, taps empty space to blow a new one | Instant cause and effect: touch, then sound and animation. Only a tap is needed. |
+| 🙈 Peekaboo | 12 | Taps a cloth to reveal an animal, which then makes its sound | Around 18 to 24 months children understand that hidden things still exist, so they love hiding and finding. |
+| 🐮 Animal sounds | 12 | Taps an animal to hear its sound, then its name | Children understand more than they can say. Hearing the sound and the name together helps with words. |
+| 🎹 Music | 12 | Taps or slides a finger across 8 coloured bars (Do Re Mi Fa Sol La Ti Do) | Every note is in the major scale, so any touch sounds pleasant. The ▶ button plays "Twinkle, Twinkle, Little Star" as a model for grown-ups. |
+| 🎨 Draw | 15 | Paints rainbow lines or stamps shapes with a finger | Scribbling starts around 15 to 18 months. Big strokes, no "right way" to draw. |
+| 🔔 Buttons | 18 | Switches a light on and off, rings a bell, plays a drum, drives a car, launches a rocket (3, 2, 1), switches day and night | Toddlers love switches and buttons. Each one gives a different result. |
+| 🐻 Feed the bear | 24 | Drags food to the bear's mouth, or taps it and it flies there by itself | Simple dragging, tied to pretend play and caring for others. |
+| 🧩 Shapes | 24 | Drags a shape into the matching hole (circle, square, triangle, star, heart) | Shape sorting starts with the circle; by about 24 months children can match more complex shapes. |
+| 🔍 Find it | 30 | Hears "Where is the apple?" and picks one of three; sometimes finds a colour | Understanding spoken names of things and colours. After two wrong tries the right card glows as a hint. |
 
-## Nguyên tắc thiết kế rút ra từ nghiên cứu
+## Design rules drawn from the research
 
-1. **Nút to, thao tác đơn giản.** Nielsen Norman Group khuyên ô chạm cho trẻ nhỏ tối thiểu 2 × 2 cm (gấp 4 lần người lớn). Trang này dùng ô khoảng 3–6 cm. Các nghiên cứu cho thấy bé 2 tuổi làm tốt chạm và kéo, còn chụm ngón, xoay, nhấn giữ thì khó. Vì vậy chỉ dùng chạm và kéo.
-2. **Kéo thả luôn có đường lui.** Với trẻ dưới 5 tuổi, một số nhà nghiên cứu khuyên cho phép "chạm vật, vật tự bay tới đích". Trò Cho gấu ăn và Xếp hình đều làm vậy.
-3. **Nhiều ngón cùng lúc đều được.** Bé hay chạm bằng nhiều ngón hoặc cả bàn tay. Mọi trò xử lý từng ngón riêng, không bị rối.
-4. **Không thua, không điểm, không đồng hồ.** Chọn sai chỉ lắc nhẹ, không có tiếng báo lỗi. Nhịp chậm, không ép.
-5. **Mọi lần chạm đều có phản hồi** bằng âm thanh và hình, vì bé 1 tuổi đang học "mình làm gì thì có gì xảy ra".
-6. **Không chữ bắt buộc.** Chữ nhỏ chỉ để người lớn đọc cùng. Lời nói do trình duyệt đọc.
-7. **Giới hạn thời gian.** WHO khuyên không dùng màn hình dưới 1 tuổi và không quá 1 giờ mỗi ngày cho trẻ 2–4 tuổi. Hội Nhi khoa Hoa Kỳ khuyên chọn ứng dụng chậm, mở, và chơi cùng bé. Trang có hẹn giờ mặc định 10 phút, hết giờ hiện màn hình "hẹn gặp lại", chỉ phụ huynh (giữ nút 2 giây) mới chơi tiếp được.
-8. **Không có đường ra ngoài.** Không liên kết, không quảng cáo, không mua hàng.
+1. **Big targets, simple gestures.** Nielsen Norman Group recommends touch targets of at least 2 × 2 cm for young children (4 times the adult size). Here most targets are about 3 to 6 cm. Studies suggest 2-year-olds manage tap and drag, while pinch, rotate and press-and-hold are hard. So only taps and drags are used.
+2. **Dragging always has a way out.** For children under 5, some researchers suggest "tap the item, and it moves to the target". Feed the bear and Shapes both do this.
+3. **Many fingers at once is fine.** Toddlers often touch with several fingers or a whole hand. Every game handles each finger separately.
+4. **No losing, no score, no clock.** A wrong choice only wiggles, with no error sound. The pace is slow and never rushed.
+5. **Every touch gives feedback** in sound and picture, because a one-year-old is learning "when I do something, something happens".
+6. **No reading needed.** The small text is for the grown-up playing along. Words are spoken by the browser's built-in voice.
+7. **Time limits.** The WHO advises no screen time under age 1 and no more than 1 hour a day for ages 2 to 4. The American Academy of Pediatrics suggests slow, open-ended apps and playing along with your child. The site has a timer (10 minutes by default) and a "see you next time" screen; only a parent (holding a button for 2 seconds) can keep playing.
+8. **No way out of the site.** No links, no ads, no purchases.
 
-### Nguồn đã đọc
+### Sources read
 
-- [Nielsen Norman Group — Children's UX: physical development](https://www.nngroup.com/articles/children-ux-physical-development/) (kích thước ô chạm, thao tác phù hợp lứa tuổi)
-- [Nacher và cộng sự — Multi-touch gestures for pre-kindergarten children](https://riunet.upv.es/bitstream/handle/10251/64752/IJHCS-Nacher.pdf?sequence=2) (bé 2–3 tuổi và các thao tác cảm ứng)
-- [Albrecht và cộng sự, CHI PLAY 2018 — Toddler Techie Touch Generation](https://unpaywall.org/10.1145%2F3242671.3242693) (bé 18–42 tháng: kéo khó hơn chạm, chụm/xoay khó nhất)
-- [UXPA — Playful Interfaces](https://oldmagazine.uxpa.org/?p=11776) (gợi ý "chạm rồi chạm" thay vì kéo thả cho trẻ dưới 5)
-- [Zero to Three — Milestones by Age](https://www.zerotothree.org/wp-content/uploads/2026/08/Milestones-by-Age-Chart.pdf), [Britannica — Infant and toddler development](https://www.britannica.com/science/infant-and-toddler-development/Introduction) (mốc phát triển)
-- [Pathways.org — Screen time](https://pathways.org/screen-time-for-babies-and-children) (tổng hợp khuyến nghị về thời gian màn hình)
+- [Nielsen Norman Group: Children's UX and physical development](https://www.nngroup.com/articles/children-ux-physical-development/) (touch target size, gestures that suit each age)
+- [Nacher et al.: Multi-touch gestures for pre-kindergarten children](https://riunet.upv.es/bitstream/handle/10251/64752/IJHCS-Nacher.pdf?sequence=2) (2- to 3-year-olds and touch gestures)
+- [Albrecht et al., CHI PLAY 2018: Toddler Techie Touch Generation](https://unpaywall.org/10.1145%2F3242671.3242693) (children 18 to 42 months: dragging is harder than tapping, pinch and rotate hardest)
+- [UXPA: Playful Interfaces](https://oldmagazine.uxpa.org/?p=11776) (the "tap, then tap" idea instead of drag and drop for under-5s)
+- [Zero to Three: Milestones by Age](https://www.zerotothree.org/wp-content/uploads/2026/08/Milestones-by-Age-Chart.pdf) and [Britannica: Infant and toddler development](https://www.britannica.com/science/infant-and-toddler-development/Introduction) (developmental milestones)
+- [Pathways.org: Screen time](https://pathways.org/screen-time-for-babies-and-children) (a summary of screen-time guidance)
 
-**Lưu ý trung thực về nguồn:** nhiều nghiên cứu về cảm ứng có mẫu nhỏ và độ tuổi pha trộn nên số liệu chỉ nên coi là gợi ý. Khuyến nghị thời gian màn hình mình mới đọc qua các trang tổng hợp, chưa đọc bản gốc của WHO và AAP (AAP đã đổi cách tiếp cận trong 2025–2026, chú trọng nội dung và việc chơi cùng bé hơn là con số cứng). Các mốc tháng tuổi ở bảng trên là khoảng tham khảo, mỗi bé một khác.
+**An honest note on sources:** many touch studies use small samples and mixed ages, so the numbers are best read as guidance. The screen-time guidance was read through summary pages, not the original WHO and AAP documents (the AAP has shifted in 2025 and 2026 toward content quality and co-viewing rather than fixed numbers). The ages in the table above are rough ranges, and every child is different.
 
-## Giới hạn hiện tại
+## Current limits
 
-- **Chưa thử trên máy thật.** Mình đã chạy thử bằng Chrome giả lập màn hình cảm ứng ở ba cỡ (điện thoại dọc, điện thoại ngang, iPad): chạm, kéo, giữ mở khu phụ huynh đều chạy, không có lỗi. Nhưng tiếng và giọng nói chưa nghe được trong lần thử này.
-- **Giọng nói phụ thuộc máy.** Trang dùng giọng đọc có sẵn của iPhone/iPad/Android. Nếu máy chưa cài giọng tiếng Việt thì lời đọc có thể im hoặc đọc bằng giọng khác (cách cài ghi trong khu phụ huynh). Âm thanh và hình vẫn chạy bình thường.
-- **iPhone/iPad:** gạt công tắc chuông sang bật thì mới nghe tiếng.
-- **Hình emoji** trông hơi khác nhau giữa iOS, Android và Windows.
-- **Tiếng kêu con vật** hiện do giọng đọc nói "meo meo", "gâu gâu". Nếu muốn tiếng thật, có thể thêm tệp thu âm sau.
+- **Not yet tried on real devices.** The site was tested in desktop Chrome with touch emulation at three sizes (phone upright, phone sideways, iPad): tapping, dragging and opening the parent area all work with no errors. Sound levels were measured, but the sounds and the voice have not been heard by ear in testing.
+- **Animal sounds are synthesized.** Each one is built in the browser from a few oscillators and filters, so they sound cartoon-like rather than like real recordings. They work offline and need no files. Real recordings could replace them later.
+- **The voice depends on the device.** The site uses the built-in text-to-speech voice of the iPhone, iPad or Android phone. If no English voice is installed, spoken words may be skipped (the parent area explains how to install one). Sound and pictures still work.
+- **iPhone/iPad:** the ringer switch must be on to hear sound.
+- **Emoji** look a little different on iOS, Android and Windows.
 
-## Cấu trúc tệp
+## Files
 
-- `index.html`, `style.css` — giao diện
-- `core.js` — cài đặt, âm thanh, giọng nói, hiệu ứng, tiện ích kéo thả
-- `games-a.js` — bong bóng, ú òa, con vật kêu, đàn (và dữ liệu con vật, đồ ăn, đồ vật, màu)
-- `games-b.js` — vẽ, nút bấm, cho gấu ăn, xếp hình, tìm đồ
-- `shell.js` — menu, khu phụ huynh, hẹn giờ
-- `sw.js`, `manifest.webmanifest`, `icon*` — chạy ngoại tuyến và cài như ứng dụng
+- `index.html`, `style.css`: the interface
+- `core.js`: settings, sound (including the animal sounds), voice, effects, drag helper
+- `games-a.js`: bubbles, peekaboo, animal sounds, music (and the data for animals, food, objects and colours)
+- `games-b.js`: draw, buttons, feed the bear, shapes, find it
+- `shell.js`: menu, parent area, timer
+- `sw.js`, `manifest.webmanifest`, `icon*`: offline use and installing as an app
 
-**Thêm một trò mới:** thêm một khối `BE.GAMES.push({ id, icon, color, bg, min, name, start(api) { ... } })` vào `games-a.js` hoặc `games-b.js`. `api` có sẵn `say`, `on`, `timeout`, `loop` (tự dọn khi thoát trò).
+**To add a game:** add a block `BE.GAMES.push({ id, icon, color, bg, min, name, start(api) { ... } })` to `games-a.js` or `games-b.js`. The `api` object provides `say`, `on`, `timeout` and `loop`, all of which clean up when the child leaves the game.
