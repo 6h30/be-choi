@@ -265,7 +265,7 @@
         const len = Snd.animal(a.e);
         const r = t.getBoundingClientRect();
         FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 10, emoji: ['🎵', '✨'] });
-        BE.floatText(root, a.s[S.lang] + '!', r.left + r.width / 2, r.top + r.height * 0.2, 'big');
+        BE.floatText(root, a.s[S.lang] + '!', r.left + r.width / 2, r.top - 4, 'big');
         nameT = api.timeout(() => api.say(a.n.vi, a.n.en), len * 1000 + 150);
       });
       api.on(next, 'pointerdown', () => { Snd.whoosh(); page = (page + 1) % PAGES.length; fill(); });

@@ -23,7 +23,7 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 
 **Parent area:** hold the ⚙️ button in the top-right corner of the menu for 2 seconds. There you can change the volume, turn the voice on or off, filter games by the child's age, and set the play timer.
 
-## The nine games and why they were chosen
+## The twelve games and why they were chosen
 
 | Game | From (months) | What the child does | Based on |
 |---|---|---|---|
@@ -36,6 +36,9 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 | 🐻 Feed the animals | 24 | Drags food to a hungry friend's mouth, or taps it and it flies there by itself. Six friends (bear, bunny, kitty, puppy, panda, monkey) take turns, each with a favourite food. 16 foods. | Simple dragging, tied to pretend play and caring for others. |
 | 🧩 Shapes | 24 | Drags each shape into the matching hole. Ten shapes (circle, square, triangle, star, heart, diamond, oval, hexagon, rectangle, plus). Every few rounds there are four holes instead of three. | Shape sorting starts with the circle; by about 24 months children can match more complex shapes. |
 | 🔍 Find it | 30 | Four kinds of question in turn: find a thing ("Where is the apple?"), find a colour, find the animal that makes the sound you hear, and find the group with the right number (one, two or three). After two wrong tries the right card glows as a hint. | Understanding spoken names of things and colours, and early counting. |
+| 🚗 Vehicles | 15 | Taps one of 18 vehicles on 3 pages (road, rails and sky, work and water). It drives or flies across the screen, its name is spoken and it makes its sound (horn, siren, train, helicopter...). | Toddlers love vehicles. Big, slow movement is easy to follow and every tap has a visible result. |
+| 🛁 Bath time | 18 | Rubs a finger over a muddy animal to scrub it clean. Soap bubbles and squeaks follow the finger. When it is clean the animal makes its sound. Eight animals. | Scribbling and rubbing motions come early (15 to 18 months). No precision needed, no way to lose. |
+| 🧺 Colour baskets | 28 | Drags fruit and other things into the basket of the same colour (red, yellow, green, orange). Two baskets first, three later. Tapping a thing sends it to the right basket. | Sorting by colour begins around 24 months and improves through age 3. |
 
 ## Design rules drawn from the research
 
@@ -72,7 +75,8 @@ Then open `http://<your computer's IP address>:8080` on the phone.
 - `index.html`, `style.css`: the interface
 - `core.js`: settings, sound (30 animal sounds, vehicles, drums, instruments), voice, effects, drag helper
 - `games-a.js`: bubbles, peekaboo, animal sounds, music (and the data for animals, food, vehicles, toys, objects, colours and counting)
-- `games-b.js`: draw, buttons, feed the bear, shapes, find it
+- `games-b.js`: draw, buttons, feed the animals, shapes, find it
+- `games-c.js`: vehicles, bath time, colour baskets
 - `shell.js`: menu, parent area, timer
 - `sounds/`: the animal recordings (trimmed, level-matched MP3s) and `index.json` with their credits
 - `sw.js`, `manifest.webmanifest`, `icon*`: offline use and installing as an app

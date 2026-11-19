@@ -139,7 +139,7 @@
       ship() { tone(180, { dur: .9, type: 'sawtooth', vol: .1 }); tone(135, { dur: .9, type: 'sawtooth', vol: .1 }); return 1.0; },
       rocket() { hiss({ f: 200, to: 1800, dur: 1.3, vol: .28, ft: 'lowpass' }); tone(80, { dur: 1.3, to: 300, type: 'sawtooth', vol: .08 }); return 1.3; }
     };
-    const VEH_MAP = { '🚗': 'horn', '🚕': 'horn', '🚙': 'horn', '🚓': 'siren', '🚑': 'siren', '🚒': 'siren', '🚌': 'busHorn', '🚂': 'choo', '✈️': 'plane', '🚁': 'heli', '🚲': 'bike', '🚜': 'tractor', '🚢': 'ship', '⛵': 'ship', '🚀': 'rocket' };
+    const VEH_MAP = { '🚗': 'horn', '🚕': 'horn', '🚙': 'horn', '🚓': 'siren', '🚑': 'siren', '🚒': 'siren', '🚌': 'busHorn', '🚂': 'choo', '✈️': 'plane', '🚁': 'heli', '🚲': 'bike', '🚜': 'tractor', '🚢': 'ship', '⛵': 'ship', '🚀': 'rocket', '🛵': 'bike', '🚛': 'busHorn', '🚚': 'busHorn', '🚤': 'ship' };
     // Drum pads
     const DRUMS = [
       () => { tone(150, { dur: .35, to: 45, vol: .7 }); hiss({ f: 200, dur: .06, vol: .2, ft: 'lowpass' }); },
@@ -300,7 +300,10 @@
     const s = document.createElement('span');
     s.className = 'ftext ' + cls; s.textContent = text;
     s.style.left = x + 'px'; s.style.top = y + 'px';
-    root.appendChild(s); setTimeout(() => s.remove(), 1400);
+    root.appendChild(s);
+    const w = s.offsetWidth;   // keep the label fully on screen
+    s.style.left = Math.max(w / 2 + 8, Math.min(innerWidth - w / 2 - 8, x)) + 'px';
+    setTimeout(() => s.remove(), 1400);
   };
 
   // Kéo thả: chạm nhẹ (không di chuyển) được coi là "chạm", để vật tự bay tới đích
