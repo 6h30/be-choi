@@ -33,6 +33,15 @@
     return api;
   }
 
+  // A tap counts when the finger is lifted on the button, even if it wiggled a little (toddler fingers slide).
+  function onTap(el, fn) {
+    let down = false;
+    el.addEventListener('pointerdown', () => { down = true; });
+    el.addEventListener('pointerup', e => { if (down) { down = false; fn(e); } });
+    ['pointercancel', 'pointerleave'].forEach(ev => el.addEventListener(ev, () => { down = false; }));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(e); } });
+  }
+
   /* ---------- Menu ---------- */
   const ageMax = () => ({ 1: 18, 2: 30, 3: 99 }[S.age] || 99);
   const visible = () => BE.GAMES.filter(g => g.min <= ageMax());
@@ -43,7 +52,7 @@
       const b = document.createElement('button');
       b.className = 'card'; b.style.setProperty('--c', g.color);
       b.innerHTML = `<span class="ic">${g.icon}</span><span class="lb">${g.name[S.lang] || g.name.vi}</span>`;
-      b.addEventListener('click', () => startGame(g));
+      onTap(b, () => startGame(g));
       grid.appendChild(b);
     });
     layoutMenu();
@@ -75,7 +84,7 @@
     Voice.stop();
     if (!silent) { stage.classList.add('hidden'); menu.classList.remove('hidden'); layoutMenu(); }
   }
-  $('#home').addEventListener('click', () => { Snd.whoosh(); exitGame(false); });
+  onTap($('#home'), () => { Snd.whoosh(); exitGame(false); });
 
   /* ---------- Giữ lâu để vào khu phụ huynh (trẻ nhỏ không làm được) ---------- */
   function gate(btn, ms, cb) {
