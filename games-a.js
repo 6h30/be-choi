@@ -136,14 +136,15 @@
           const r = s.getBoundingClientRect();
           FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 18 });
           api.say(`Ú òa! ${s._a.n.vi}!`, `Peekaboo! ${s._a.n.en}!`);
+          api.timeout(() => Snd.animal(s._a.e), 1200);
           if (opened === slots.length && !locked) {
             locked = true;
             api.timeout(() => { Snd.whoosh(); slots.forEach(x => x.classList.remove('open')); api.timeout(round, 550); }, 3200);
           }
         } else {
           an.classList.remove('hop'); void an.offsetWidth; an.classList.add('hop');
-          Snd.boing();
-          api.say(`${s._a.n.vi}. ${s._a.s.vi}!`, `${s._a.n.en}. ${s._a.s.en}!`);
+          Snd.animal(s._a.e);
+          BE.floatText(root, s._a.s[S.lang] + '!', e.clientX, e.clientY, 'big');
         }
       });
     }
@@ -176,15 +177,18 @@
       }
       layout(); fill();
       api.on(window, 'resize', layout);
+      let nameT = null;
       api.on(gridEl, 'pointerdown', e => {
         const t = e.target.closest && e.target.closest('.an-tile'); if (!t) return;
         const a = t._a;
         t.classList.remove('hit'); void t.offsetWidth; t.classList.add('hit');
-        Snd.boing();
+        // Phát đúng tiếng kêu của con vật, rồi mới gọi tên
+        BE.Voice.stop(); clearTimeout(nameT);
+        const len = Snd.animal(a.e);
         const r = t.getBoundingClientRect();
         FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 10, emoji: ['🎵', '✨'] });
         BE.floatText(root, a.s[S.lang] + '!', r.left + r.width / 2, r.top + r.height * 0.2, 'big');
-        api.say(`${a.n.vi}. ${a.s.vi}! ${a.s.vi}!`, `${a.n.en}. ${a.s.en}!`);
+        nameT = api.timeout(() => api.say(a.n.vi, a.n.en), len * 1000 + 150);
       });
       api.on(next, 'pointerdown', () => { Snd.whoosh(); fill(); });
     }
@@ -196,15 +200,18 @@
     name: { vi: 'Đàn', en: 'Music' },
     start(api) {
       const root = api.root;
+      // 8 nốt: Đô Rê Mi Pha Son La Si Đô
       const N = [
-        { f: 261.63, c: '#ff6b6b' }, { f: 293.66, c: '#ffa94d' }, { f: 329.63, c: '#ffd43b' },
-        { f: 392.00, c: '#69db7c' }, { f: 440.00, c: '#4dabf7' }, { f: 523.25, c: '#b197fc' }
+        { f: 261.63, c: '#ff6b6b', n: 'Đô' }, { f: 293.66, c: '#ffa94d', n: 'Rê' }, { f: 329.63, c: '#ffd43b', n: 'Mi' },
+        { f: 349.23, c: '#a9e34b', n: 'Pha' }, { f: 392.00, c: '#38d9a9', n: 'Son' }, { f: 440.00, c: '#4dabf7', n: 'La' },
+        { f: 493.88, c: '#9775fa', n: 'Si' }, { f: 523.25, c: '#f783ac', n: 'Đô' }
       ];
       root.innerHTML = '<div class="xy"></div><button class="round-btn xybtn" aria-label="Nghe thử">▶&#xFE0E;</button>';
       const xy = root.firstChild, btn = root.lastChild;
       const bars = N.map((n, i) => {
         const b = document.createElement('div');
         b.className = 'bar'; b.style.setProperty('--c', n.c); b.style.setProperty('--k', 1 - i / (N.length - 1)); b.dataset.i = i;
+        b.textContent = n.n;
         xy.appendChild(b); return b;
       });
       function hit(i, x, y) {
@@ -231,7 +238,8 @@
       let playing = false;
       api.on(btn, 'pointerdown', () => {
         if (playing) return; playing = true;
-        const mel = [0, 0, 3, 3, 4, 4, 3, 3, 3, 2, 2, 1, 1, 0];
+        // Đô Đô Son Son La La Son | Pha Pha Mi Mi Rê Rê Đô
+        const mel = [0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0];
         mel.forEach((n, k) => api.timeout(() => hit(n), k * 520));
         api.timeout(() => { playing = false; }, mel.length * 520);
       });

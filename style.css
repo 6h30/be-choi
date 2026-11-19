@@ -79,7 +79,8 @@ button { font: inherit; color: inherit; border: 0; cursor: pointer; }
 
 /* ----- Đàn ----- */
 .xy { position: absolute; inset: 0; display: flex; flex-direction: column-reverse; align-items: center; justify-content: center; gap: 2.2vmin; padding: 88px 4vmin 4vmin; touch-action: none; }
-.bar { background: var(--c); border-radius: 22px; box-shadow: 0 6px 0 rgba(0, 0, 0, .16), inset 0 6px 0 rgba(255, 255, 255, .4); width: calc(72% + 28% * var(--k)); flex: 1; touch-action: none; }
+.bar { display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(16px, 3.2vmin, 28px); color: rgba(255, 255, 255, .92); text-shadow: 0 2px 0 rgba(0, 0, 0, .18); pointer-events: auto;
+  background: var(--c); border-radius: 22px; box-shadow: 0 6px 0 rgba(0, 0, 0, .16), inset 0 6px 0 rgba(255, 255, 255, .4); width: calc(72% + 28% * var(--k)); flex: 1; touch-action: none; }
 .bar.hit { animation: barhit .28s ease-out; }
 @media (min-aspect-ratio: 1/1) {
   .xy { flex-direction: row; align-items: center; padding: 4vmin 4vmin 4vmin 90px; }

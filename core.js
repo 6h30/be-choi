@@ -64,10 +64,52 @@
       src.connect(fl); fl.connect(g); g.connect(master);
       src.start(t); src.stop(t + dur + 0.05);
     }
+    // Giọng tổng hợp: sóng răng cưa (dây thanh) đi qua các bộ lọc "formant" (khoang miệng)
+    // o.pts: đường cao độ [[0..1 theo thời gian, Hz]], o.fm: các formant (Hz hoặc [từ,đến]), o.vib: [tần số, độ sâu]
+    function voc(o) {
+      if (!ctx || ctx.state !== 'running') return;
+      const t = ctx.currentTime + (o.at || 0), dur = o.dur;
+      const osc = ctx.createOscillator(); osc.type = o.type || 'sawtooth';
+      o.pts.forEach((p, i) => { const tt = t + p[0] * dur; if (i) osc.frequency.linearRampToValueAtTime(p[1], tt); else osc.frequency.setValueAtTime(p[1], tt); });
+      if (o.vib) {
+        const lfo = ctx.createOscillator(), lg = ctx.createGain();
+        lfo.frequency.value = o.vib[0]; lg.gain.value = o.vib[1];
+        lfo.connect(lg); lg.connect(osc.frequency); lfo.start(t); lfo.stop(t + dur + 0.1);
+      }
+      const g = ctx.createGain(), v = o.vol == null ? 0.4 : o.vol;
+      const att = Math.min(o.att || 0.03, dur * 0.3), rel = dur * 0.3;
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + att);
+      g.gain.setValueAtTime(v, t + dur - rel); g.gain.linearRampToValueAtTime(0.0001, t + dur);
+      const mix = ctx.createGain(); mix.gain.value = o.boost || 5;
+      if (o.fm) o.fm.forEach(f => {
+        const b = ctx.createBiquadFilter(); b.type = 'bandpass'; b.Q.value = o.q || 5;
+        b.frequency.setValueAtTime(Array.isArray(f) ? f[0] : f, t);
+        if (Array.isArray(f)) b.frequency.linearRampToValueAtTime(f[1], t + dur);
+        osc.connect(b); b.connect(mix);
+      }); else osc.connect(mix);
+      mix.connect(g); g.connect(master);
+      osc.start(t); osc.stop(t + dur + 0.05);
+    }
+    // Tiếng kêu từng con vật (tự tổng hợp). Mỗi hàm trả về độ dài (giây).
+    const ANIMAL = {
+      '🐱'() { voc({ pts: [[0, 480], [.3, 820], [.65, 700], [1, 360]], dur: .85, fm: [[850, 550], [1900, 1500]], q: 7, vib: [6, 14] }); return .85; },
+      '🐶'() { [0, .3].forEach(at => { voc({ at, pts: [[0, 270], [.3, 210], [1, 130]], dur: .2, fm: [[750, 520], [1300, 1000]], q: 3, vol: .4, att: .01 }); hiss({ at, f: 1600, dur: .1, vol: .16, q: .7 }); }); return .55; },
+      '🐮'() { voc({ pts: [[0, 105], [.3, 135], [.8, 120], [1, 85]], dur: 1.5, fm: [[420, 320], [950, 720]], q: 5, vib: [5, 3], boost: 7 }); return 1.5; },
+      '🦆'() { [0, .25, .5].forEach(at => voc({ at, pts: [[0, 560], [1, 400]], dur: .17, fm: [1100, 2100], q: 4, att: .01, vol: .45 })); return .75; },
+      '🐔'() { voc({ pts: [[0, 480], [1, 800]], dur: .32, fm: [1300, 2600], q: 4, vib: [11, 25], vol: .35 }); voc({ at: .36, pts: [[0, 860], [.5, 740], [1, 640]], dur: .4, fm: [1300, 2600], q: 4, vib: [11, 25], vol: .35 }); voc({ at: .8, pts: [[0, 900], [1, 460]], dur: .55, fm: [1300, 2600], q: 4, vib: [11, 25], vol: .35 }); return 1.4; },
+      '🐷'() { voc({ pts: [[0, 150], [.3, 260], [1, 120]], dur: .38, fm: [[500, 900], 1500], q: 4, vol: .5 }); voc({ at: .42, pts: [[0, 180], [1, 110]], dur: .26, fm: [[600, 800], 1400], q: 4, vol: .45 }); hiss({ at: .42, f: 2200, dur: .2, vol: .12, q: .8 }); return .75; },
+      '🐸'() { [0, .55].forEach(g0 => { for (let i = 0; i < 4; i++) voc({ at: g0 + i * .055, type: 'square', pts: [[0, 300], [1, 230]], dur: .05, fm: [[800, 600], 1700], q: 4, att: .004, vol: .4 }); }); return 1.0; },
+      '🐑'() { voc({ pts: [[0, 340], [1, 290]], dur: .95, fm: [[900, 700], [1500, 1700]], q: 6, vib: [30, 22], vol: .45, boost: 6 }); return .95; },
+      '🐴'() { voc({ pts: [[0, 480], [.15, 1150], [.4, 920], [.7, 720], [1, 340]], dur: 1.3, fm: [[1500, 1200], 2800], q: 3, vib: [13, 45], vol: .4 }); return 1.3; },
+      '🐦'() { [[0, 3000, 4300], [.13, 3200, 4500], [.26, 3000, 4300], [.46, 3800, 2900]].forEach(c => tone(c[1], { at: c[0], dur: .09, to: c[2], vol: .55 })); return .6; },
+      '🦁'() { voc({ pts: [[0, 70], [.2, 115], [1, 55]], dur: 1.6, fm: [[320, 220], [750, 520]], q: 2, vib: [22, 16], vol: .3, boost: 6, att: .1 }); hiss({ f: 500, dur: 1.4, vol: .2, ft: 'lowpass', att: .1 }); return 1.6; },
+      '🐘'() { voc({ pts: [[0, 300], [.25, 820], [.7, 760], [1, 480]], dur: 1.2, fm: [[1000, 1400], [2200, 3000]], q: 3, vib: [14, 32], vol: .4 }); return 1.2; }
+    };
     // Thang âm ngũ cung: chạm bừa vẫn nghe hài hòa
     const PENTA = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5];
     const api = {
-      unlock, vol, tone, hiss, PENTA,
+      unlock, vol, tone, hiss, voc, PENTA,
+      animal(emoji) { const f = ANIMAL[emoji]; return f ? f() : 0; },
       marimba(f) { tone(f, { dur: 0.9, vol: 0.35, att: 0.004 }); tone(f * 4, { dur: 0.25, vol: 0.1, att: 0.002 }); tone(f * 2, { dur: 0.5, vol: 0.08 }); },
       pop(i) { const f = PENTA[(i == null ? Math.floor(Math.random() * PENTA.length) : i) % PENTA.length]; tone(f, { dur: 0.2, vol: 0.3, to: f * 1.5 }); hiss({ f: 2600, to: 800, dur: 0.1, vol: 0.22, q: 0.8 }); },
       ding(f) { f = f || 880; tone(f, { dur: 0.7, vol: 0.3 }); tone(f * 2.01, { dur: 0.3, vol: 0.1 }); },
