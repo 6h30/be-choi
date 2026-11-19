@@ -3,8 +3,8 @@
   'use strict';
   const { rand, pick, shuffle, Snd, FX, S, DATA } = BE;
 
-  /* ============ 10. VEHICLES (15 months+): vehicles drive on their own road, rails, water or sky lane ============ */
-  // k = which lane: road, rail, water (bottom lane) or air (top lane)
+  /* ============ 10. VEHICLES (15 months+): four fixed lanes (sky, road, rails, water); each vehicle drives in its own lane ============ */
+  // k = the lane it belongs to: air, road, rail or water
   const V = (e, vi, en, k) => ({ e, n: { vi, en }, k });
   const VPAGES = [
     { t: 'On the road', bg: 'linear-gradient(#cfe9ff,#e8f7d8)', list: [V('🚗', 'xe hơi', 'car', 'road'), V('🚕', 'xe taxi', 'taxi', 'road'), V('🚌', 'xe buýt', 'bus', 'road'), V('🚓', 'xe cảnh sát', 'police car', 'road'), V('🚑', 'xe cứu thương', 'ambulance', 'road'), V('🚒', 'xe cứu hỏa', 'fire truck', 'road')] },
@@ -12,35 +12,47 @@
     { t: 'Work and water', bg: 'linear-gradient(#cdf3ff,#e6f6d8)', list: [V('🚜', 'máy cày', 'tractor', 'road'), V('🚛', 'xe tải', 'truck', 'road'), V('🚚', 'xe giao hàng', 'delivery truck', 'road'), V('🚢', 'con tàu', 'ship', 'water'), V('⛵', 'thuyền buồm', 'sailboat', 'water'), V('🚤', 'ca nô', 'speedboat', 'water')] }
   ];
   const TURN = { '✈️': 'rot', '🚀': 'rot', '🚁': 'flip' };   // make flyers point right as they cross the sky lane
+  const LANE_ORDER = ['air', 'road', 'rail', 'water'];
   BE.GAMES.push({
     id: 'vehicles', icon: '🚗', color: '#ffd6cc', bg: 'linear-gradient(#cfe9ff,#e8f7d8)', min: 15,
     name: { vi: 'Xe cộ', en: 'Vehicles' },
     start(api) {
       const root = api.root;
-      root.innerHTML = '<div class="lane sky"></div><div class="an-grid"></div><div class="lane ground" data-kind="road"></div><div class="page-title"></div>'
-        + '<button class="round-btn clearbtn" aria-label="Next vehicles">▶&#xFE0E;</button>';
-      const sky = root.querySelector('.sky'), gridEl = root.querySelector('.an-grid'), ground = root.querySelector('.ground'),
-        title = root.querySelector('.page-title'), next = root.querySelector('.clearbtn');
+      root.innerHTML = '<div class="an-grid veh"></div>' + LANE_ORDER.map(k => `<div class="lane" data-kind="${k}"></div>`).join('')
+        + '<div class="page-title"></div><button class="round-btn clearbtn" aria-label="Next vehicles">▶&#xFE0E;</button>';
+      const gridEl = root.querySelector('.an-grid'), title = root.querySelector('.page-title'), next = root.querySelector('.clearbtn');
       const BG = ['#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#ffc6ff'];
-      const TRANSIT = 3200;          // every vehicle takes the same time to cross, so none can catch up with another
-      let page = 0, nameT = null, R = 60;
-      // one lane = one track: vehicles enter one after another (queue) and never overlap
-      const lanes = { sky: { el: sky, free: 0, clear: 0, kind: 'air', waiting: 0 }, ground: { el: ground, free: 0, clear: 0, kind: 'road', waiting: 0 } };
+      const TRANSIT = 3200;          // every vehicle takes the same time to cross, so none can catch up with the one ahead
+      let page = 0, R = 50;
+      // One track per lane. Vehicles of different kinds each use their own lane, so they start at once.
+      // Vehicles of the same kind (for example a car and a bus) queue and set off a moment apart.
+      const lanes = {}; LANE_ORDER.forEach(k => { lanes[k] = { el: root.querySelector(`.lane[data-kind="${k}"]`), free: 0, waiting: 0 }; });
 
       function layout() {
-        const W = innerWidth, H = innerHeight;
-        R = Math.round(Math.max(44, Math.min(64, H * 0.075)));
-        const probe = document.createElement('div');            // measure the bottom safe area (iPhone home bar)
+        const W = innerWidth, H = innerHeight, land = W > H * 1.15, GAP = 6;
+        const probe = document.createElement('div');            // bottom safe area (iPhone home bar)
         probe.style.cssText = 'position:fixed;bottom:0;visibility:hidden;padding-bottom:env(safe-area-inset-bottom,0px)';
         root.appendChild(probe); const sb = parseFloat(getComputedStyle(probe).paddingBottom) || 0; probe.remove();
-        const laneH = Math.round(R * 1.3), top = H < 500 ? 66 : 84, bottomGap = 12 + sb;
-        sky.style.top = top + 'px'; sky.style.height = laneH + 'px';
-        ground.style.height = laneH + 'px'; ground.style.bottom = bottomGap + 'px';
-        const gridTop = top + laneH + 10, gridBottom = H - bottomGap - laneH - 10;
-        gridEl.classList.add('veh'); gridEl.style.top = gridTop + 'px'; gridEl.style.bottom = (H - gridBottom) + 'px'; gridEl.style.padding = '0 10px';
-        const f = BE.fit(6, W - 24, gridBottom - gridTop, 0.1, 240);
-        gridEl.style.setProperty('--s', f.s + 'px'); gridEl.style.setProperty('--g', f.gap + 'px');
-        root.style.setProperty('--R', R + 'px');
+        const top = H < 500 ? 66 : 84, bot = 12 + sb;
+        let laneH;
+        if (!land) {
+          // phone upright: picture tiles on top, the four lanes stacked underneath
+          laneH = Math.round(Math.max(54, Math.min(76, H * 0.09)));
+          const total = 4 * laneH + 3 * GAP, y0 = H - bot - total;
+          LANE_ORDER.forEach((k, i) => { const s = lanes[k].el.style; s.left = '0'; s.right = '0'; s.top = (y0 + i * (laneH + GAP)) + 'px'; s.height = laneH + 'px'; });
+          Object.assign(gridEl.style, { left: '0', right: '0', top: top + 'px', bottom: (H - (y0 - 10)) + 'px', padding: '0 10px' });
+          const f = BE.fit(6, W - 24, y0 - 10 - top, 0.1, 240);
+          gridEl.style.setProperty('--s', f.s + 'px'); gridEl.style.setProperty('--g', f.gap + 'px');
+        } else {
+          // phone sideways or tablet: tiles on the left, the four lanes stacked on the right
+          const laneTop = 90, leftW = Math.round(W * 0.47);
+          laneH = Math.floor((H - laneTop - bot - 3 * GAP) / 4);
+          LANE_ORDER.forEach((k, i) => { const s = lanes[k].el.style; s.left = (leftW + 14) + 'px'; s.right = '10px'; s.top = (laneTop + i * (laneH + GAP)) + 'px'; s.height = laneH + 'px'; });
+          Object.assign(gridEl.style, { left: '0', right: (W - leftW) + 'px', top: top + 'px', bottom: bot + 'px', padding: '0 10px' });
+          const f = BE.fit(6, leftW - 20, H - top - bot, 0.1, 240);
+          gridEl.style.setProperty('--s', f.s + 'px'); gridEl.style.setProperty('--g', f.gap + 'px');
+        }
+        R = Math.round(Math.min(64, laneH / 1.3));
       }
       function fill() {
         const P = VPAGES[page];
@@ -52,22 +64,14 @@
           t._v = v; gridEl.appendChild(t);
         });
       }
-      // Send a vehicle along its lane; it waits its turn if the lane is busy
       function send(v) {
-        const air = v.k === 'air', lane = air ? lanes.sky : lanes.ground;
-        if (lane.waiting >= 3) return;                              // enough vehicles are already waiting
-        const now = performance.now();
-        let start = Math.max(now, lane.free);
-        if (!air && v.k !== lane.kind) start = Math.max(start, lane.clear);   // wait until the old road/rail/water has cleared
-        const gap = (1.9 * R) / ((innerWidth + 3 * R) / TRANSIT);   // time for the vehicle ahead to move on by about two vehicle lengths
-        lane.free = start + gap; lane.clear = Math.max(lane.clear, start + TRANSIT);
-        lane.waiting++;
-        api.timeout(() => {
-          lane.waiting--;
-          if (!air) { lane.kind = v.k; ground.dataset.kind = v.k; }
-          run(lane.el, v, air);
-          Snd.vehicle(v.e);
-        }, Math.max(0, start - now));
+        const lane = lanes[v.k], air = v.k === 'air';
+        if (lane.waiting >= 3) return;                              // enough vehicles are already waiting in this lane
+        const laneW = lane.el.clientWidth, now = performance.now();
+        const gap = (1.9 * R) / ((laneW + 3 * R) / TRANSIT);        // time for the vehicle ahead to move on by about two lengths
+        const start = Math.max(now, lane.free);
+        lane.free = start + gap; lane.waiting++;
+        api.timeout(() => { lane.waiting--; run(lane.el, v, air); Snd.vehicle(v.e); }, Math.max(0, start - now));
       }
       function run(laneEl, v, air) {
         const W = laneEl.clientWidth, el = document.createElement('div');
@@ -80,7 +84,7 @@
         setTimeout(() => el.remove(), TRANSIT + 30);
       }
       layout(); fill();
-      api.on(window, 'resize', () => { layout(); });
+      api.on(window, 'resize', layout);
       api.on(gridEl, 'pointerdown', e => {
         const t = e.target.closest && e.target.closest('.an-tile'); if (!t) return;
         const v = t._v;

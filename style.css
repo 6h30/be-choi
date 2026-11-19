@@ -238,18 +238,17 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 
 /* Vehicles: a sky lane on top, a road / rail / water lane below, picture tiles in between */
 .lane { position: absolute; left: 0; right: 0; overflow: hidden; pointer-events: none; border-radius: 18px; z-index: 5; }
-.lane.sky { background: linear-gradient(#bfe3ff, #e9f6ff); }
-.lane.sky::before { content: ""; position: absolute; inset: 0; opacity: .95;
+.lane[data-kind="air"] { background: linear-gradient(#bfe3ff, #e9f6ff); }
+.lane[data-kind="air"]::before { content: ""; position: absolute; inset: 0; opacity: .95;
   background: radial-gradient(ellipse 54px 15px at 18% 38%, #fff 96%, transparent), radial-gradient(ellipse 76px 18px at 58% 66%, #fff 96%, transparent), radial-gradient(ellipse 46px 12px at 86% 34%, #fff 96%, transparent); }
-.lane.ground { transition: background-color .3s; }
-.lane.ground[data-kind="road"] { background: #6b7280; }
-.lane.ground[data-kind="road"]::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 2px); height: 4px;
+.lane[data-kind="road"] { background: #6b7280; }
+.lane[data-kind="road"]::after { content: ""; position: absolute; left: 0; right: 0; top: calc(50% - 2px); height: 4px;
   background: repeating-linear-gradient(90deg, #fff 0 26px, transparent 26px 52px); }
-.lane.ground[data-kind="rail"] { background: #d6c59c; }
-.lane.ground[data-kind="rail"]::before { content: ""; position: absolute; left: 0; right: 0; top: 12%; bottom: 12%; background: repeating-linear-gradient(90deg, #8a6a43 0 9px, transparent 9px 30px); }
-.lane.ground[data-kind="rail"]::after { content: ""; position: absolute; left: 0; right: 0; top: 30%; bottom: 30%; border-top: 4px solid #6b7280; border-bottom: 4px solid #6b7280; }
-.lane.ground[data-kind="water"] { background: #4dabf7; }
-.lane.ground[data-kind="water"]::after { content: ""; position: absolute; inset: 0; opacity: .8;
+.lane[data-kind="rail"] { background: #d6c59c; }
+.lane[data-kind="rail"]::before { content: ""; position: absolute; left: 0; right: 0; top: 12%; bottom: 12%; background: repeating-linear-gradient(90deg, #8a6a43 0 9px, transparent 9px 30px); }
+.lane[data-kind="rail"]::after { content: ""; position: absolute; left: 0; right: 0; top: 30%; bottom: 30%; border-top: 4px solid #6b7280; border-bottom: 4px solid #6b7280; }
+.lane[data-kind="water"] { background: #4dabf7; }
+.lane[data-kind="water"]::after { content: ""; position: absolute; inset: 0; opacity: .8;
   background: radial-gradient(circle at 50% 120%, transparent 0 9px, rgba(255,255,255,.7) 10px 12px, transparent 13px) 0 0 / 38px 20px repeat; }
 .runner { position: absolute; left: 0; top: 0; height: 100%; display: flex; align-items: center; line-height: 1; will-change: transform; }
 .runner span { display: inline-block; }
