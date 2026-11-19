@@ -106,5 +106,158 @@
   "author": "AntumDeluge",
   "license": "CC BY-SA 4.0",
   "source": "https://opengameart.org/content/dolphin-sounds"
+ },
+ {
+  "key": "gecko",
+  "file": "gecko.mp3",
+  "dur": 4.0,
+  "title": "Mating call of a male Tokay gecko (Gekko gecko).ogg",
+  "author": "Richard Ling",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Mating_call_of_a_male_Tokay_gecko_(Gekko_gecko).ogg"
+ },
+ {
+  "key": "bunny",
+  "file": "bunny.mp3",
+  "dur": 1.6,
+  "title": "Rabbit oinks and squeaks.wav",
+  "author": "kessir",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rabbit_oinks_and_squeaks.wav"
+ },
+ {
+  "key": "goat",
+  "file": "goat.mp3",
+  "dur": 2.5,
+  "title": "Herd of goats bleating.ogg",
+  "author": "stephan",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Herd_of_goats_bleating.ogg"
+ },
+ {
+  "key": "duck",
+  "file": "duck.mp3",
+  "dur": 2.2,
+  "title": "Domestic duck sound 01.wav",
+  "author": "Ganesh Mohan T",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Domestic_duck_sound_01.wav"
+ },
+ {
+  "key": "frog",
+  "file": "frog.mp3",
+  "dur": 2.51,
+  "title": "Marsh frog (Pelophylax ridibundus) call.ogg",
+  "author": "Llivermore",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Marsh_frog_(Pelophylax_ridibundus)_call.ogg"
+ },
+ {
+  "key": "bee",
+  "file": "bee.mp3",
+  "dur": 2.5,
+  "title": "Bombus buzz.ogg",
+  "author": "Mysid",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Bombus_buzz.ogg"
+ },
+ {
+  "key": "snake",
+  "file": "snake.mp3",
+  "dur": 2.5,
+  "title": "Rattlesnake.ogg",
+  "author": "Unknown",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Rattlesnake.ogg"
+ },
+ {
+  "key": "turkey",
+  "file": "turkey.mp3",
+  "dur": 2.5,
+  "title": "Gobbler.ogg",
+  "author": "bod",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Gobbler.ogg"
+ },
+ {
+  "key": "rooster",
+  "file": "rooster.mp3",
+  "dur": 3.0,
+  "title": "Medium rooster crowing.ogg",
+  "author": "alys",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg"
+ },
+ {
+  "key": "lion",
+  "file": "lion.mp3",
+  "dur": 3.0,
+  "title": "Lion raring-sound1TamilNadu178.ogg",
+  "author": "த*உழவன்",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Lion_raring-sound1TamilNadu178.ogg"
+ },
+ {
+  "key": "elephant",
+  "file": "elephant.mp3",
+  "dur": 1.4,
+  "title": "Elephant voice - trumpeting.ogg",
+  "author": "தகவலுழவன்",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Elephant_voice_-_trumpeting.ogg"
+ },
+ {
+  "key": "monkey",
+  "file": "monkey.mp3",
+  "dur": 2.0,
+  "title": "Brown woolly monkey alarm call.wav",
+  "author": "Kai Medina (Mk170101)",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Brown_woolly_monkey_alarm_call.wav"
+ },
+ {
+  "key": "parrot",
+  "file": "parrot.mp3",
+  "dur": 2.5,
+  "title": "African grey parrot sound.wav",
+  "author": "Ganesh Mohan T",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:African_grey_parrot_sound.wav"
+ },
+ {
+  "key": "wolf",
+  "file": "wolf.mp3",
+  "dur": 3.5,
+  "title": "Wolf howls.ogg",
+  "author": "Unknown",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Wolf_howls.ogg"
+ },
+ {
+  "key": "owl",
+  "file": "owl.mp3",
+  "dur": 2.5,
+  "title": "Maghreb owl hooting.wav",
+  "author": "عثمان",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Maghreb_owl_hooting.wav"
+ },
+ {
+  "key": "fox",
+  "file": "fox.mp3",
+  "dur": 2.0,
+  "title": "Bellender Fuchs.ogg",
+  "author": "Jugrü",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bellender_Fuchs.ogg"
+ },
+ {
+  "key": "whale",
+  "file": "whale.mp3",
+  "dur": 3.5,
+  "title": "Humpback whale moo.ogg",
+  "author": "\"The recordings available here were made by the National Par",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Humpback_whale_moo.ogg"
  }
 ]
