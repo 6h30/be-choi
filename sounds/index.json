@@ -70,5 +70,41 @@
   "author": "alys",
   "license": "Public domain",
   "source": "https://commons.wikimedia.org/wiki/File:Chickens_demanding_food.ogg"
+ },
+ {
+  "key": "cricket",
+  "file": "cricket.mp3",
+  "dur": 2.5,
+  "title": "cricket sounds",
+  "author": "syncopika",
+  "license": "CC0",
+  "source": "https://opengameart.org/content/cricket-sounds"
+ },
+ {
+  "key": "bear",
+  "file": "bear.mp3",
+  "dur": 2.4,
+  "title": "Bear Growls (bear_01 and bear_02)",
+  "author": "AntumDeluge",
+  "license": "CC0",
+  "source": "https://opengameart.org/content/bear-growls"
+ },
+ {
+  "key": "penguin",
+  "file": "penguin.mp3",
+  "dur": 1.09,
+  "title": "Penguin Sounds (penguin_01 and penguin_02)",
+  "author": "AntumDeluge",
+  "license": "CC0",
+  "source": "https://opengameart.org/content/penguin-sounds"
+ },
+ {
+  "key": "dolphin",
+  "file": "dolphin.mp3",
+  "dur": 2.8,
+  "title": "Dolphin Sounds (dolphin_cry)",
+  "author": "AntumDeluge",
+  "license": "CC BY-SA 4.0",
+  "source": "https://opengameart.org/content/dolphin-sounds"
  }
 ]
