@@ -84,8 +84,31 @@
     btn.addEventListener('pointerdown', e => { e.preventDefault(); btn.classList.add('holding'); t = setTimeout(() => { btn.classList.remove('holding'); t = null; cb(); }, ms); });
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => btn.addEventListener(ev, () => { clearTimeout(t); t = null; btn.classList.remove('holding'); }));
   }
-  gate($('#gear'), 2000, openPanel);
-  gate($('#byeResume'), 2000, () => { playSec = 0; bye.classList.add('hidden'); });
+  /* ---------- Grown-ups check: after the 2-second hold, type a number that is written in words ---------- */
+  const ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  const TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const words = n => n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? '-' + ONES[n % 10] : '');
+  let adultOk = null, adultTarget = 0, adultTyped = '';
+  function adultFresh() {
+    adultTarget = 21 + Math.floor(Math.random() * 78); adultTyped = '';
+    $('#adultWord').textContent = words(adultTarget); showTyped();
+  }
+  function showTyped() { $('#adultDisp').textContent = (adultTyped + '– –'.replace(/ /g, '').slice(0, 2 - adultTyped.length)).split('').join(' '); }
+  function askAdult(ok) { adultOk = ok; adultFresh(); $('#adult').classList.remove('hidden'); }
+  $('#adult').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const k = b.dataset.k, disp = $('#adultDisp');
+    if (k === 'x') { $('#adult').classList.add('hidden'); adultOk = null; return; }
+    if (k === 'b') { adultTyped = adultTyped.slice(0, -1); showTyped(); return; }
+    if (adultTyped.length >= 2) return;
+    adultTyped += k; showTyped();
+    if (adultTyped.length === 2) {
+      if (+adultTyped === adultTarget) { $('#adult').classList.add('hidden'); const f = adultOk; adultOk = null; f && f(); }
+      else { disp.classList.remove('bad'); void disp.offsetWidth; disp.classList.add('bad'); setTimeout(() => { disp.classList.remove('bad'); adultFresh(); }, 450); }
+    }
+  });
+  gate($('#gear'), 2000, () => askAdult(openPanel));
+  gate($('#byeResume'), 2000, () => askAdult(() => { playSec = 0; bye.classList.add('hidden'); }));
 
   /* ---------- Khu phụ huynh ---------- */
   function syncPanel() {
@@ -99,11 +122,12 @@
       : en ? 'An English voice is available on this device.'
         : 'No English voice was found on this device, so spoken words may be skipped. On iPhone/iPad: Settings → Accessibility → Spoken Content → Voices → English. On Android: Settings → Language → Text-to-speech output.';
   }
+  const isNative = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
   const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   function fillCredits() {
     const list = Snd.credits().slice().sort((a, b) => a.key.localeCompare(b.key));
     $('#creditList').innerHTML = list.length
-      ? '<ul class="why">' + list.map(m => `<li><b>${esc(m.key.charAt(0).toUpperCase() + m.key.slice(1))}</b>: <a href="${esc(m.source)}" target="_blank" rel="noopener">${esc(m.title)}</a> by ${esc(m.author)}, ${esc(m.license)}</li>`).join('') + '</ul>'
+      ? '<ul class="why">' + list.map(m => `<li><b>${esc(m.key.charAt(0).toUpperCase() + m.key.slice(1))}</b>: ${isNative() ? esc(m.title) : `<a href="${esc(m.source)}" target="_blank" rel="noopener">${esc(m.title)}</a>`} by ${esc(m.author)}, ${esc(m.license)}</li>`).join('') + '</ul>'
         + '<p class="note">Animal recordings come from Wikimedia Commons and OpenGameArt. They were trimmed, volume-levelled and compressed for this site, and keep their original licenses (CC0 and public domain need no credit; CC BY and CC BY-SA are credited above). The tiger, the vehicles and the instruments use computer-made sounds.</p>'
       : 'Animal sounds on this device are computer-made.';
   }

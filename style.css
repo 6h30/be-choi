@@ -261,3 +261,16 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 
 /* inside the native app there is no browser full-screen button */
 .native #fsBtn { display: none; }
+
+/* ---------- Grown-ups check ---------- */
+#adult { position: fixed; inset: 0; z-index: 120; background: rgba(40, 30, 70, .7); display: flex; align-items: center; justify-content: center; padding: 14px; }
+.adult-card { background: #fffaf0; border-radius: 24px; padding: 20px; width: min(340px, 100%); text-align: center; }
+.adult-title { font-weight: 900; font-size: 22px; }
+.adult-q { margin: 8px 0 10px; font-size: 18px; }
+.adult-q b { color: #6a4fa3; font-size: 22px; display: block; margin-top: 2px; }
+.adult-disp { font-size: 34px; font-weight: 900; letter-spacing: .3em; height: 52px; line-height: 52px; background: #eee3ff; border-radius: 14px; margin-bottom: 12px; }
+.adult-disp.bad { animation: shake .4s; background: #ffd6d6; }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.keypad button { height: 56px; border-radius: 14px; background: #ffe08a; font-size: 24px; font-weight: 800; }
+.keypad button.alt { background: #eee3ff; }
+.keypad button:active { transform: scale(.94); }
