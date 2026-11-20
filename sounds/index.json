@@ -2,11 +2,11 @@
  {
   "key": "cat",
   "file": "cat.mp3",
-  "dur": 1.5,
-  "title": "Meow of a Siamese cat - freemaster2.wav",
-  "author": "freemaster2",
-  "license": "CC0",
-  "source": "https://commons.wikimedia.org/wiki/File:Meow_of_a_Siamese_cat_-_freemaster2.wav"
+  "dur": 0.78,
+  "title": "Meow.ogg",
+  "author": "Dcrosby (English Wikipedia)",
+  "license": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Meow.ogg"
  },
  {
   "key": "dog",
