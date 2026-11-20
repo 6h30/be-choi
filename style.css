@@ -250,7 +250,9 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 .lane[data-kind="water"] { background: #4dabf7; }
 .lane[data-kind="water"]::after { content: ""; position: absolute; inset: 0; opacity: .8;
   background: radial-gradient(circle at 50% 120%, transparent 0 9px, rgba(255,255,255,.7) 10px 12px, transparent 13px) 0 0 / 38px 20px repeat; }
-.runner { position: absolute; left: 0; top: 0; height: 100%; display: flex; align-items: center; line-height: 1; will-change: transform; }
+/* lane decorations (waves, rails, road line, clouds) stay underneath; vehicles always draw on top */
+.lane::before, .lane::after { z-index: 0; }
+.runner { position: absolute; left: 0; top: 0; height: 100%; display: flex; align-items: center; line-height: 1; will-change: transform; z-index: 2; }
 .runner span { display: inline-block; }
 .runner span.rot { transform: rotate(45deg) scale(.82); }
 .runner span.flip { transform: scaleX(-1); }
