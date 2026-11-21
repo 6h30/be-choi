@@ -157,6 +157,41 @@
   });
   $('#resetTimer').addEventListener('click', () => { playSec = 0; });
 
+  /* ---------- Screen lock (Android screen pinning, native app only) ---------- */
+  // The parent turns it on from the parent area; while it is on, Home, Recents and the notification
+  // shade are blocked by Android. A small 🔒 button (hold 3 seconds) turns it off again.
+  const nativePlugin = name => (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins[name]) || null;
+  const unlockBtn = $('#unlock');
+  let locked = false;
+  function setLocked(v) { locked = !!v; unlockBtn.classList.toggle('hidden', !locked); }
+  async function pollLock() {
+    const p = nativePlugin('ScreenLock'); if (!p) return;
+    try { const r = await p.state(); setLocked(r && r.locked); } catch (e) { }
+  }
+  $('#lockBtn').addEventListener('click', async () => {
+    const p = nativePlugin('ScreenLock'); if (!p) return;
+    panel.classList.add('hidden'); renderMenu();
+    try { await p.start(); } catch (e) { }
+    setTimeout(pollLock, 600); setTimeout(pollLock, 2500);
+  });
+  gate(unlockBtn, 3000, async () => {
+    const p = nativePlugin('ScreenLock');
+    if (p) { try { await p.stop(); } catch (e) { } }
+    setLocked(false); setTimeout(pollLock, 400);
+  });
+  // Back button: blocked while locked, otherwise goes back one step instead of closing the app by accident
+  function wireBackButton() {
+    const App = nativePlugin('App'); if (!App || !App.addListener) return;
+    App.addListener('backButton', () => {
+      if (locked) return;
+      if (!$('#adult').classList.contains('hidden')) { $('#adult').classList.add('hidden'); adultOk = null; return; }
+      if (!panel.classList.contains('hidden')) { $('#panelClose').click(); return; }
+      if (!bye.classList.contains('hidden')) return;
+      if (cur) { Snd.whoosh(); exitGame(false); return; }
+      try { App.minimizeApp(); } catch (e) { }
+    });
+  }
+
   /* ---------- Hẹn giờ: chỉ tính lúc bé đang chơi ---------- */
   setInterval(() => {
     if (stage.classList.contains('hidden') || document.hidden) return;
@@ -179,6 +214,7 @@
     if (native) {
       document.documentElement.classList.add('native');
       try { window.Capacitor.Plugins.StatusBar.hide(); } catch (e) { }
+      wireBackButton(); pollLock(); setInterval(pollLock, 1500);
     } else if (location.protocol.startsWith('http') && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
   }
   boot();

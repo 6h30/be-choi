@@ -31,6 +31,9 @@
     <button id="home" aria-label="Home">🏠</button>
   </section>
 
+  <!-- Shown only while the screen is locked (Android screen pinning): hold 3 seconds to unlock -->
+  <button id="unlock" class="gate hidden" aria-label="Unlock the screen (hold for 3 seconds)">🔒<i class="fill"></i></button>
+
   <!-- Play time is over -->
   <div id="bye" class="hidden">
     <div class="moon">🌙</div>
@@ -60,6 +63,11 @@
         <button id="resetTimer" class="btn">⏱ Reset play time</button>
       </div>
       <p id="voiceInfo" class="note"></p>
+
+      <div id="lockRow" class="lock-row">
+        <button id="lockBtn" class="btn">🔒 Lock the screen while my child plays</button>
+        <p class="note">Your child can't leave the app by accident. To unlock, hold the 🔒 button for 3 seconds. The first time, Android asks you to confirm.</p>
+      </div>
 
       <details open>
         <summary>Why is it designed this way?</summary>

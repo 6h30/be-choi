@@ -33,6 +33,10 @@ jobs:
           npx capacitor-assets generate --android
           npx cap sync android
 
+      - name: Add the screen lock plugin
+        working-directory: app
+        run: node patch-android.mjs
+
       - name: Build the debug APK
         working-directory: app/android
         run: ./gradlew assembleDebug --no-daemon

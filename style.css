@@ -264,6 +264,11 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 /* inside the native app there is no browser full-screen button */
 .native #fsBtn { display: none; }
 
+/* screen lock (native app only) */
+.lock-row { display: none; }
+.native .lock-row { display: block; margin: 6px 0; }
+#unlock { position: fixed; left: calc(var(--sl) + 12px); bottom: calc(var(--sb) + 12px); z-index: 95; opacity: .6; }
+
 /* ---------- Grown-ups check ---------- */
 #adult { position: fixed; inset: 0; z-index: 120; background: rgba(40, 30, 70, .7); display: flex; align-items: center; justify-content: center; padding: 14px; }
 .adult-card { background: #fffaf0; border-radius: 24px; padding: 20px; width: min(340px, 100%); text-align: center; }

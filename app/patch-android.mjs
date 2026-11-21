@@ -28,6 +28,68 @@ if (process.env.ANDROID_KEYSTORE_PATH) {
   console.log('No signing key given: the release bundle will be unsigned (fine for checking the build).');
 }
 fs.writeFileSync(file, s);
+
+// ---- Screen lock plugin (Android screen pinning) ----
+// Lets the parent area pin the app so a child cannot leave it (no Home, no Recents, no notification shade).
+// Android asks the grown-up to confirm the first time. The web side calls Capacitor.Plugins.ScreenLock.
+const pkgDir = 'android/app/src/main/java/app/littleplay/toddler';
+if (!fs.existsSync(pkgDir)) throw new Error('Could not find ' + pkgDir);
+fs.writeFileSync(pkgDir + '/ScreenLockPlugin.java', `package app.littleplay.toddler;
+
+import android.app.ActivityManager;
+import android.content.Context;
+import com.getcapacitor.JSObject;
+import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+
+@CapacitorPlugin(name = "ScreenLock")
+public class ScreenLockPlugin extends Plugin {
+    private boolean isLocked() {
+        ActivityManager am = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        return am != null && am.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE;
+    }
+
+    @PluginMethod
+    public void start(final PluginCall call) {
+        getActivity().runOnUiThread(() -> {
+            try { getActivity().startLockTask(); } catch (Exception e) { /* ignored: the web side shows the lock only when it is on */ }
+            call.resolve();
+        });
+    }
+
+    @PluginMethod
+    public void stop(final PluginCall call) {
+        getActivity().runOnUiThread(() -> {
+            try { getActivity().stopLockTask(); } catch (Exception e) { /* not locked */ }
+            call.resolve();
+        });
+    }
+
+    @PluginMethod
+    public void state(PluginCall call) {
+        JSObject r = new JSObject();
+        r.put("locked", isLocked());
+        call.resolve(r);
+    }
+}
+`);
+fs.writeFileSync(pkgDir + '/MainActivity.java', `package app.littleplay.toddler;
+
+import android.os.Bundle;
+import com.getcapacitor.BridgeActivity;
+
+public class MainActivity extends BridgeActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        registerPlugin(ScreenLockPlugin.class);
+        super.onCreate(savedInstanceState);
+    }
+}
+`);
+console.log('Screen lock plugin added.');
+
 console.log(`versionCode ${code}, versionName ${name}`);
 console.log('--- android/app/build.gradle (head) ---');
 console.log(s.split('\n').slice(0, 60).join('\n'));
