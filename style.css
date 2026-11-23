@@ -266,7 +266,9 @@ summary { font-weight: 800; cursor: pointer; padding: 8px 0; }
 
 /* screen lock (native app only) */
 .lock-row { display: none; }
-.native .lock-row { display: block; margin: 6px 0; }
+.android .lock-row { display: block; margin: 6px 0; }
+.guided-row { display: none; }
+.ios .guided-row { display: block; margin: 6px 0; }
 #unlock { position: fixed; left: calc(var(--sl) + 12px); bottom: calc(var(--sb) + 12px); z-index: 95; opacity: .6; }
 
 /* ---------- Grown-ups check ---------- */

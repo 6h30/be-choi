@@ -212,9 +212,13 @@
     renderMenu();
     const native = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
     if (native) {
-      document.documentElement.classList.add('native');
+      const root = document.documentElement;
+      root.classList.add('native');
+      let platform = ''; try { platform = window.Capacitor.getPlatform(); } catch (e) { }
+      root.classList.add(platform === 'ios' ? 'ios' : 'android');
       try { window.Capacitor.Plugins.StatusBar.hide(); } catch (e) { }
-      wireBackButton(); pollLock(); setInterval(pollLock, 1500);
+      wireBackButton();
+      if (platform !== 'ios') { pollLock(); setInterval(pollLock, 1500); } // screen pinning exists on Android only; iPhone uses Guided Access
     } else if (location.protocol.startsWith('http') && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
   }
   boot();

@@ -1,5 +1,5 @@
 // Cache everything up front so the site also works without internet
-const CACHE = 'be-choi-v6';
+const CACHE = 'be-choi-v7';
 const FILES = ['./', 'index.html', 'style.css', 'core.js', 'games-a.js', 'games-b.js', 'games-c.js', 'shell.js', 'manifest.webmanifest', 'icon.svg', 'icon-180.png', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil((async () => {
