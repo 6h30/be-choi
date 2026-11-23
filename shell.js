@@ -134,10 +134,11 @@
   const isNative = () => !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
   const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   function fillCredits() {
-    const list = Snd.credits().slice().sort((a, b) => a.key.localeCompare(b.key));
+    const nm = m => m.label || (m.key.charAt(0).toUpperCase() + m.key.slice(1));
+    const list = Snd.credits().slice().sort((a, b) => nm(a).localeCompare(nm(b)));
     $('#creditList').innerHTML = list.length
-      ? '<ul class="why">' + list.map(m => `<li><b>${esc(m.key.charAt(0).toUpperCase() + m.key.slice(1))}</b>: ${isNative() ? esc(m.title) : `<a href="${esc(m.source)}" target="_blank" rel="noopener">${esc(m.title)}</a>`} by ${esc(m.author)}, ${esc(m.license)}</li>`).join('') + '</ul>'
-        + '<p class="note">Animal recordings come from Wikimedia Commons and OpenGameArt. They were trimmed, volume-levelled and compressed for this site, and keep their original licenses (CC0 and public domain need no credit; CC BY and CC BY-SA are credited above). The tiger, the vehicles and the instruments use computer-made sounds.</p>'
+      ? '<ul class="why">' + list.map(m => `<li><b>${esc(nm(m))}</b>: ${isNative() ? esc(m.title) : `<a href="${esc(m.source)}" target="_blank" rel="noopener">${esc(m.title)}</a>`} by ${esc(m.author)}, ${esc(m.license)}</li>`).join('') + '</ul>'
+        + '<p class="note">Animal and vehicle recordings come from Wikimedia Commons and OpenGameArt. They were trimmed, volume-levelled and compressed for this site, and keep their original licenses (CC0 and public domain need no credit; CC BY and CC BY-SA are credited above). The tiger and the instruments use computer-made sounds.</p>'
       : 'Animal sounds on this device are computer-made.';
   }
   function openPanel() { syncPanel(); fillCredits(); panel.classList.remove('hidden'); }

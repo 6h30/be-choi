@@ -259,5 +259,165 @@
   "author": "\"The recordings available here were made by the National Par",
   "license": "Public domain",
   "source": "https://commons.wikimedia.org/wiki/File:Humpback_whale_moo.ogg"
+ },
+ {
+  "key": "veh_car",
+  "label": "Car horn",
+  "file": "veh_car.mp3",
+  "dur": 1.3,
+  "title": "Car Horn.wav",
+  "author": "15HPanska_Ruttner_Jan",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Car_Horn.wav"
+ },
+ {
+  "key": "veh_bus",
+  "label": "Bus horn",
+  "file": "veh_bus.mp3",
+  "dur": 1.6,
+  "title": "WWS CityBusMANSG220horn.ogg",
+  "author": "Work With Sounds / Technical Museum of Slovenia",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WWS_CityBusMANSG220horn.ogg"
+ },
+ {
+  "key": "veh_police",
+  "label": "Police siren",
+  "file": "veh_police.mp3",
+  "dur": 2.6,
+  "title": "American police siren i.ogg",
+  "author": "lezer",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:American_police_siren_i.ogg"
+ },
+ {
+  "key": "veh_ambulance",
+  "label": "Ambulance siren",
+  "file": "veh_ambulance.mp3",
+  "dur": 2.6,
+  "title": "AmbulanceSound1.wav",
+  "author": "Demircimehmed",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:AmbulanceSound1.wav"
+ },
+ {
+  "key": "veh_firetruck",
+  "label": "Fire engine siren",
+  "file": "veh_firetruck.mp3",
+  "dur": 2.6,
+  "title": "WWS Fireenginesiren.ogg",
+  "author": "Work With Sounds / Konrad Gutkowski",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WWS_Fireenginesiren.ogg"
+ },
+ {
+  "key": "veh_train",
+  "label": "Train horn",
+  "file": "veh_train.mp3",
+  "dur": 2.4,
+  "title": "AirChime K5LA.ogg",
+  "author": "HarveyHenkelmann",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:AirChime_K5LA.ogg"
+ },
+ {
+  "key": "veh_airplane",
+  "label": "Airplane flying past",
+  "file": "veh_airplane.mp3",
+  "dur": 3.0,
+  "title": "428086 inspectorj airplane-boeing-flyby-right-to-left-a.wav",
+  "author": "InspectorJ",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:428086_inspectorj_airplane-boeing-flyby-right-to-left-a.wav"
+ },
+ {
+  "key": "veh_helicopter",
+  "label": "Helicopter flying over",
+  "file": "veh_helicopter.mp3",
+  "dur": 3.0,
+  "title": "Chinook helicopter flying over Greenwich in London.ogg",
+  "author": "JoBrodie",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chinook_helicopter_flying_over_Greenwich_in_London.ogg"
+ },
+ {
+  "key": "veh_rocket",
+  "label": "Rocket launch",
+  "file": "veh_rocket.mp3",
+  "dur": 3.0,
+  "title": "Rocket Launch (Antti Luode).mp3",
+  "author": "Antti Luode",
+  "license": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rocket_Launch_(Antti_Luode).mp3"
+ },
+ {
+  "key": "veh_bicycle",
+  "label": "Bicycle bell",
+  "file": "veh_bicycle.mp3",
+  "dur": 0.55,
+  "title": "156064 marcolo91 bicycle-bell.wav",
+  "author": "marcolo91",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:156064_marcolo91_bicycle-bell.wav"
+ },
+ {
+  "key": "veh_scooter",
+  "label": "Scooter engine",
+  "file": "veh_scooter.mp3",
+  "dur": 2.6,
+  "title": "Yamaha RX-100 accelerates to top speed.ogg",
+  "author": "Marianoberna",
+  "license": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Yamaha_RX-100_accelerates_to_top_speed.ogg"
+ },
+ {
+  "key": "veh_tractor",
+  "label": "Tractor",
+  "file": "veh_tractor.mp3",
+  "dur": 2.6,
+  "title": "WWS TractorUrsusC328driving.ogg",
+  "author": "Work With Sounds / Museum of Municipal Engineering",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WWS_TractorUrsusC328driving.ogg"
+ },
+ {
+  "key": "veh_truck",
+  "label": "Truck driving past",
+  "file": "veh_truck.mp3",
+  "dur": 2.6,
+  "title": "WWS FSRTarpan239Dvandriving.ogg",
+  "author": "Work With Sounds / Museum of Municipal Engineering",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WWS_FSRTarpan239Dvandriving.ogg"
+ },
+ {
+  "key": "veh_ship",
+  "label": "Ship horn",
+  "file": "veh_ship.mp3",
+  "dur": 2.6,
+  "title": "Cruise ship Albatros ship horn.ogg",
+  "author": "Tvabutzku1234",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cruise_ship_Albatros_ship_horn.ogg"
+ },
+ {
+  "key": "veh_sailboat",
+  "label": "Water lapping against a boat",
+  "file": "veh_sailboat.mp3",
+  "dur": 2.59,
+  "title": "WWS Smallwaves.ogg",
+  "author": "Work With Sounds / Torsten Nilsson",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WWS_Smallwaves.ogg"
+ },
+ {
+  "key": "veh_speedboat",
+  "label": "Motorboat engine",
+  "file": "veh_speedboat.mp3",
+  "dur": 2.6,
+  "title": "WWS MSThti.ogg",
+  "author": "Work With Sounds / Werstas",
+  "license": "CC BY 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WWS_MSThti.ogg"
  }
 ]

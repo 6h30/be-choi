@@ -157,6 +157,10 @@
     const KEY = { '🐱': 'cat', '🐶': 'dog', '🦎': 'gecko', '🐦': 'bird', '🦗': 'cricket', '🐰': 'bunny', '🐮': 'cow', '🐷': 'pig', '🐑': 'sheep', '🐐': 'goat',
       '🐴': 'horse', '🐔': 'chicken', '🦆': 'duck', '🐸': 'frog', '🐝': 'bee', '🐍': 'snake', '🦃': 'turkey', '🐓': 'rooster', '🦁': 'lion', '🐯': 'tiger',
       '🐘': 'elephant', '🐒': 'monkey', '🦜': 'parrot', '🐻': 'bear', '🐺': 'wolf', '🦉': 'owl', '🦊': 'fox', '🐧': 'penguin', '🐬': 'dolphin', '🐋': 'whale' };
+    // vehicle emoji -> real recording key (several vehicles can share one recording)
+    const VEH_REAL = { '🚗': 'veh_car', '🚕': 'veh_car', '🚙': 'veh_car', '🚌': 'veh_bus', '🚓': 'veh_police', '🚑': 'veh_ambulance', '🚒': 'veh_firetruck',
+      '🚂': 'veh_train', '✈️': 'veh_airplane', '🚁': 'veh_helicopter', '🚀': 'veh_rocket', '🚲': 'veh_bicycle', '🛵': 'veh_scooter', '🚜': 'veh_tractor',
+      '🚛': 'veh_truck', '🚚': 'veh_truck', '🚢': 'veh_ship', '⛵': 'veh_sailboat', '🚤': 'veh_speedboat' };
     function decodeOne(k) {
       const s = REAL[k];
       if (!s || !s.raw || !ctx || s.buf || s.dec) return;
@@ -212,7 +216,12 @@
       piano(f) { tone(f, { dur: 1.4, type: 'triangle', vol: .32, att: .006 }); tone(f * 2, { dur: .7, vol: .1, att: .004 }); tone(f * 3, { dur: .35, vol: .05, att: .003 }); },
       bells(f) { tone(f * 2, { dur: 1.6, vol: .22 }); tone(f * 2 * 2.76, { dur: .7, vol: .08 }); tone(f * 2 * 5.4, { dur: .3, vol: .04 }); },
       drumpad(i) { DRUMS[i % DRUMS.length](); },
-      vehicle(emoji) { const k = VEH_MAP[emoji]; return k ? VEH[k]() : VEH.horn(); },
+      vehicle(emoji) {
+        const rk = VEH_REAL[emoji], r = rk && REAL[rk];
+        if (r && !r.bad && r.buf && playReal(rk)) return r.dur;       // a real recording (sounds/veh_*.mp3)
+        if (r && r.raw) decodeOne(rk);                                  // not decoded yet: use the computer-made sound this one time
+        const k = VEH_MAP[emoji]; return k ? VEH[k]() : VEH.horn();
+      },
       choo() { return VEH.choo(); },
       alarm() { for (let i = 0; i < 10; i++) tone(i % 2 ? 1700 : 2000, { at: i * .1, dur: .07, type: 'square', vol: .1 }); },
       squeak() { tone(1500, { dur: .09, to: 2600, vol: .35 }); tone(2000, { at: .1, dur: .12, to: 3000, vol: .3 }); },
