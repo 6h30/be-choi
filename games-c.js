@@ -37,7 +37,7 @@
         let laneH;
         if (!land) {
           // phone upright: picture tiles on top, the four lanes stacked underneath
-          laneH = Math.round(Math.max(54, Math.min(76, H * 0.09)));
+          laneH = Math.round(Math.max(62, Math.min(104, H * 0.12)));   // taller lanes so the vehicles can be bigger
           const total = 4 * laneH + 3 * GAP, y0 = H - bot - total;
           LANE_ORDER.forEach((k, i) => { const s = lanes[k].el.style; s.left = '0'; s.right = '0'; s.top = (y0 + i * (laneH + GAP)) + 'px'; s.height = laneH + 'px'; });
           Object.assign(gridEl.style, { left: '0', right: '0', top: top + 'px', bottom: (H - (y0 - 10)) + 'px', padding: '0 10px' });
@@ -52,7 +52,7 @@
           const f = BE.fit(6, leftW - 20, H - top - bot, 0.1, 240);
           gridEl.style.setProperty('--s', f.s + 'px'); gridEl.style.setProperty('--g', f.gap + 'px');
         }
-        R = Math.round(Math.min(64, laneH / 1.3));
+        R = Math.round(Math.min(104, laneH / 1.12));
       }
       function fill() {
         const P = VPAGES[page];
